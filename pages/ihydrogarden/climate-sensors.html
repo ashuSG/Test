@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <!-- jQuery -->
+    <script src="../../vendor/jquery/jquery.min.js"></script>
+
+    <!-- AWS Cognito SDK -->
+    <script src="../../dist/js/aws-cognito-sdk.min.js"></script>
+    <script src="../../dist/js/amazon-cognito-identity.min.js"></script>
+
+    <title>iHydroGarden - Climate</title>
+    <!-- favicon -->
+    <link rel="shortcut icon" href="../../dist/images/favicon.ico" type="image/x-icon" />
+
+    <!-- Custom CSS-->
+    <link href="./css/netafarm-climate.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="./css/global.css">
+
+    <div id="header-stuff"></div>
+    <script>
+        $('head').append($('<div>').load("header-tp.html"));
+    </script>
+</head>
+
+<body>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav id="nav-tp" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        </nav>
+        <script>
+            $("#nav-tp").load("nav-tp.html");
+        </script>
+
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-10">
+                    <h1 class="page-header">Climate Analysis</h1>
+                </div>
+                <div id="powerBi-link" class="col-lg-2" style="display:none">
+                    <h3 class="page-header" style="text-align: right;"><a href="./power-bi.html">PowerBI</a></h3>
+                </div>
+            </div>
+            <div id="climate-dashboard" class="panel panel-default display">
+                <div id="dashboardContainer" src="https://ap-southeast-1.quicksight.aws.amazon.com"></div>
+            </div>
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="../../vendor/aws/aws-sdk-2.966.0.min.js"></script>
+    <script src="../../vendor/aws/quicksight-embedding-js-sdk.min.js"></script>
+
+    <!-- Status Page JS -->
+    <script src="js/gvars.js" defer></script>
+    <script src="js/climate-sensors/climate-quicksight.js"></script>
+</body>
+</html>

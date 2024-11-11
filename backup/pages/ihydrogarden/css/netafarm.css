@@ -1,0 +1,92 @@
+#edit-schedule #undo-schedule{
+  background-color: #F6a612;
+  border-color: #F6a612;
+  color: white;
+}
+
+#save-schedule {
+  background-color: #289ec0;
+  border-color: #289ec0;
+  color: white;
+}
+
+#add-zone-button {
+  background-color: #289ec0;
+  border-color: #289ec0;
+  color: white;
+}
+
+.nav.navbar-top-links.navbar-right li a {
+  padding: 15px;
+  min-height: 50px;
+  color: #75b11d; /*Used color picker*/
+}
+
+#program-schedule-div .bootstrap-datetimepicker-widget table a:hover {
+  background: #eeeeee;
+}
+
+#program-schedule-div .checkbox-inline.disable{
+  cursor: not-allowed;
+}
+
+#program-schedule-div .input-group-addon.disabled{
+  cursor: not-allowed;
+}
+
+#program-schedule-div .checkbox-inline input[type=checkbox]{
+  cursor: pointer;
+}
+
+#program-schedule-div .checkbox-inline input[type=checkbox]:disabled{
+  cursor: not-allowed;
+}
+
+#edit-schedule-name:hover{
+  cursor: pointer;
+  color: #2fbef2;
+}
+
+span.disabled#edit-schedule-name {
+  cursor: pointer;
+  color: white;
+}
+
+#schedule-namee{
+    margin-left: 13px;
+}
+
+.dosinbox{
+    padding: 30px;
+}
+
+.para{
+    width: 90px;
+    margin-bottom: -20px;
+    margin-top: 24px;
+    margin-left: 13px;
+    margin-right: 10px;
+}
+
+.line{
+    margin-top: 30px;
+}
+
+.removers.iht-btn-row-remover{
+  margin-top: -165px;
+  margin-left: -200px;
+  width: 20px;
+  height: 20px;
+}
+
+.insert{
+    margin-top: -7px;
+}
+
+html{
+  background-color: black;
+}
+
+html > body{
+  background-color: black;
+}

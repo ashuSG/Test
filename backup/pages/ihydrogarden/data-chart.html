@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- jQuery -->
+    <script type="text/javascript" src="../../vendor/jquery/jquery.min.js"></script>
+
+    <!-- datetime related -->
+    <script type="text/javascript" src="./js/moment-with-locales.js"></script>
+    <script type="text/javascript" src="./js/bootstrap-datetimepicker.min.js"></script>
+    <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+
+    <!-- Bootstrap Core JavaScript -->
+	<script type="text/javascript" src="../../vendor/bootstrap/js/bootstrap.min.js"></script>
+	
+	<!-- AWS Cognito SDK -->
+    <script src="../../dist/js/aws-cognito-sdk.min.js"></script>
+    <script src="../../dist/js/amazon-cognito-identity.min.js"></script>
+
+    <title>iHydroGarden - Schedule</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="../../dist/images/favicon.ico" type="image/x-icon" />
+
+    <!-- Graph css -->
+    <link href="../../vendor/dygraph/css/dygraph.css" rel="stylesheet">
+
+    <!-- Custom css -->
+    <link href="./css/ihydrogarden-loader.css" rel="stylesheet">
+    <link href="./css/netafarm.css" rel="stylesheet">
+    <link href="./css/data-charts.css" rel="stylesheet">
+    
+    <!-- Metis Menu Plugin JavaScript -->
+    <script type="text/javascript" src="../../vendor/metisMenu/metisMenu.min.js"></script>
+	<div id="testr"></div>
+</head>
+
+<body>
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav id="nav-tp" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        </nav>
+        <script>
+            $("#nav-tp").load("nav-tp.html");
+		</script>
+
+	<div id="loader-wrapper">
+		<!-- <h1>" "</h1> -->
+		<div id="loader"></div>
+		<!-- <div class="loader-section section-left"></div>
+		<div class="loader-section section-right"></div> -->
+	</div>
+	<!-- /#loader-wrapper --> 
+		
+		<div id="content">
+			<div id="page-wrapper">
+                <h1 class="page-header">Farm IoT Data Anaytics</h1>
+                <div class="panel panel-default" id="data-chart-div">
+                    <div class="panel-body">
+                        <div class="page-head col-lg-12">
+                            
+                            <div class="row setting-bar col-lg-12">
+                                <div class="form-group col col-lg-4" style="display: flex;">
+                                    <label>From:</label>
+                                    <div id="datetimepicker1" class="input-group date">
+                                        <input type="text" id="chart_start_time" class="form-control" placeholder="mm/dd/yyyy"/>
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span></div>
+                                </div>
+                                <div class="form-group col col-lg-4" style="display: flex;">
+                                    <label>To:</label>
+                                    <div id="datetimepicker2" class="input-group date">
+                                        <input type="text" id="chart_end_time" class="form-control" placeholder="mm/dd/yyyy"/>
+                                        <span class="input-group-addon"><i class="fa fa-calendar"></i></span></div>
+                                </div>
+                
+                                <button class="btn btn-primary col col-lg-4" id="apply-chart-setting-btn" type="button">Apply</button>
+                            </div>
+
+                            <div class="row data-names-bar col-lg-12">
+                                <div id="zone-names-list" class="row zone-names col-lg-4">
+                                    <label id="no-zone-found-msg">Setup was not completed</label>
+                                </div>
+
+                                <div id="indirect-sen-names-list" class="row indirect-sensor-names col-lg-4">
+                                    <label id="no-indirect-found-msg">No indirectly connected sensors found</label>
+                                </div>
+                                
+                                <div id="direct-sensor-names-list" class="row direct-sensor-names col-lg-4">
+                                   
+                                </div>
+                            </div>
+                            <div class="row col-lg-12">
+                                <div class="col col-lg-12">
+                                    <label id="no-data-msg">No Data Found</label>
+                                    <label id="no-data-selected-msg">No Data Selected</label>
+                                    <div id="graphdiv2"></div>
+                                    <!-- <label id="mote-msg">DO at 1000 is On;</label>
+                                    <label id="mote-msg">DO at 0 is Off</label> -->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                
+            </div>
+
+			<!-- /#page-wrapper -->
+		</div>
+		<!-- /#content -->   
+    </div>
+    <!-- /#wrapper -->
+
+
+
+	<script type="text/javascript" defer>
+		$('head').append($('#testr').load("header-tp.html"));
+		$("input[type='text']").on("change", function() {
+        console.log("text changed!!")
+		});
+	</script>
+
+    <!-- Chart Page JS -->
+    <script src="js/gvars.js" defer></script>
+    <!-- <script src="js/multi-schedule.js" defer></script> -->
+    <script src="js/graphs/data-chart.js" defer></script>
+    <script src="../../vendor/dygraph/js/dygraph.min.js" defer></script>
+    
+
+	<!-- lodash JS -->
+	<script src="../../dist/js/lodash.min.js"></script>
+</body>
+</html>

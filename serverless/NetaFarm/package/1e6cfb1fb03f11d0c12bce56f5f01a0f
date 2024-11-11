@@ -1,0 +1,3574 @@
+---
+swagger: "2.0"
+info:
+  version: "2017-07-26T08:40:43Z"
+  description: "API for NetaFarm mobile and web applications"
+  title: "iHydroGarden" #API Name
+host: "1ri6rn6wgh.execute-api.ap-southeast-1.amazonaws.com"
+basePath: "/iHydroGarden"
+schemes:
+- "https"
+x-amazon-apigateway-request-validators: 
+  "Validate body and query string parameters": 
+    validateRequestBody: true
+    validateRequestParameters: true
+  "Validate query string parameters": 
+    validateRequestBody: false
+    validateRequestParameters: true
+x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+paths:
+# Alarms****************************************************************************
+  /Alarms/acknowledge-alerts:
+    post:
+      consumes:
+      - "application/json"
+      - "application/x-www-form-urlencoded"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "422":
+          description: "422 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "401":
+          description: "401 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "502":
+          description: "502 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "403":
+          description: "403 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "404":
+          description: "404 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "504":
+          description: "504 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+      - iHydroGarden-user-pool: []
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::494367507588:role/API_Gateway_Invoke_Lambda_Role"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:494367507588:function:acknowledgeAlerts/invocations"
+        responses:
+          ([\s\S]*\[504\][\s\S]*)|(^[Task timed out].*):
+            statusCode: "504"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[404\][\s\S]*':
+            statusCode: "404"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[502\][\s\S]*':
+            statusCode: "502"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[401\][\s\S]*':
+            statusCode: "401"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[403\][\s\S]*':
+            statusCode: "403"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[400\][\s\S]*':
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*(Process\s?exited\s?before\s?completing\s?request|\[500\])[\s\S]*':
+            statusCode: "500"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[422\][\s\S]*':
+            statusCode: "422"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{ \n    \"data\" : $input.json('$')\n}"
+          application/x-www-form-urlencoded: "\n    #define( $body )\n      {\n  \
+            \    #foreach( $token in $input.path('$').split('&') )\n        #set(\
+            \ $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size()\
+            \ )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0]))\
+            \ )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n    \
+            \      #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n\
+            \        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop\
+            \ )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key)\
+            \ )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\
+            \\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext\
+            \ ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n   \
+            \ \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\"\
+            ,\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n\
+            \       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\
+            \n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\
+            \n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\
+            \n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n  \
+            \  #set( $map = $context.identity )\n    \"identity\": $loop\n\n    #set(\
+            \ $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+        passthroughBehavior: "never"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Credentials: "'false'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{statusCode:200}"
+        passthroughBehavior: "when_no_match"
+  /Alarms/get-active-alerts:
+    post:
+      consumes:
+      - "application/json"
+      - "application/x-www-form-urlencoded"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "422":
+          description: "422 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "401":
+          description: "401 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "502":
+          description: "502 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "403":
+          description: "403 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "404":
+          description: "404 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "504":
+          description: "504 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+      - iHydroGarden-user-pool: []
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::494367507588:role/API_Gateway_Invoke_Lambda_Role"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:494367507588:function:getActiveAlerts/invocations"
+        responses:
+          ([\s\S]*\[504\][\s\S]*)|(^[Task timed out].*):
+            statusCode: "504"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[404\][\s\S]*':
+            statusCode: "404"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[502\][\s\S]*':
+            statusCode: "502"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[401\][\s\S]*':
+            statusCode: "401"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[403\][\s\S]*':
+            statusCode: "403"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[400\][\s\S]*':
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*(Process\s?exited\s?before\s?completing\s?request|\[500\])[\s\S]*':
+            statusCode: "500"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[422\][\s\S]*':
+            statusCode: "422"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{ \n    \"data\" : $input.json('$')\n}"
+          application/x-www-form-urlencoded: "\n    #define( $body )\n      {\n  \
+            \    #foreach( $token in $input.path('$').split('&') )\n        #set(\
+            \ $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size()\
+            \ )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0]))\
+            \ )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n    \
+            \      #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n\
+            \        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop\
+            \ )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key)\
+            \ )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\
+            \\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext\
+            \ ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n   \
+            \ \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\"\
+            ,\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n\
+            \       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\
+            \n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\
+            \n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\
+            \n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n  \
+            \  #set( $map = $context.identity )\n    \"identity\": $loop\n\n    #set(\
+            \ $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+        passthroughBehavior: "never"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Credentials: "'false'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{statusCode:200}"
+        passthroughBehavior: "when_no_match"
+  /Alarms/get-logged-alerts:
+    post:
+      consumes:
+      - "application/json"
+      - "application/x-www-form-urlencoded"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "422":
+          description: "422 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "401":
+          description: "401 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "502":
+          description: "502 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "403":
+          description: "403 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "404":
+          description: "404 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "504":
+          description: "504 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+      - iHydroGarden-user-pool: []
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::494367507588:role/API_Gateway_Invoke_Lambda_Role"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:494367507588:function:getLoggedAlerts/invocations"
+        responses:
+          ([\s\S]*\[504\][\s\S]*)|(^[Task timed out].*):
+            statusCode: "504"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[404\][\s\S]*':
+            statusCode: "404"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[502\][\s\S]*':
+            statusCode: "502"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[401\][\s\S]*':
+            statusCode: "401"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[403\][\s\S]*':
+            statusCode: "403"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[400\][\s\S]*':
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*(Process\s?exited\s?before\s?completing\s?request|\[500\])[\s\S]*':
+            statusCode: "500"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[422\][\s\S]*':
+            statusCode: "422"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{ \n    \"data\" : $input.json('$')\n}"
+          application/x-www-form-urlencoded: "\n    #define( $body )\n      {\n  \
+            \    #foreach( $token in $input.path('$').split('&') )\n        #set(\
+            \ $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size()\
+            \ )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0]))\
+            \ )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n    \
+            \      #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n\
+            \        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop\
+            \ )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key)\
+            \ )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\
+            \\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext\
+            \ ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n   \
+            \ \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\"\
+            ,\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n\
+            \       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\
+            \n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\
+            \n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\
+            \n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n  \
+            \  #set( $map = $context.identity )\n    \"identity\": $loop\n\n    #set(\
+            \ $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+        passthroughBehavior: "never"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Credentials: "'false'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{statusCode:200}"
+        passthroughBehavior: "when_no_match"
+# Commands**************************************************************************
+  /Commands/set-konbini-action:
+    post:
+      consumes:
+      - "application/json"
+      - "application/x-www-form-urlencoded"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "422":
+          description: "422 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "401":
+          description: "401 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "502":
+          description: "502 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "403":
+          description: "403 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "404":
+          description: "404 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "504":
+          description: "504 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+      - iHydroGarden-user-pool: []
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::494367507588:role/API_Gateway_Invoke_Lambda_Role"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:494367507588:function:setKonbiniAction/invocations"
+        responses:
+          ([\s\S]*\[504\][\s\S]*)|(^[Task timed out].*):
+            statusCode: "504"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[404\][\s\S]*':
+            statusCode: "404"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[502\][\s\S]*':
+            statusCode: "502"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[401\][\s\S]*':
+            statusCode: "401"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[403\][\s\S]*':
+            statusCode: "403"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[400\][\s\S]*':
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*(Process\s?exited\s?before\s?completing\s?request|\[500\])[\s\S]*':
+            statusCode: "500"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[422\][\s\S]*':
+            statusCode: "422"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{ \n    \"data\" : $input.json('$')\n}"
+          application/x-www-form-urlencoded: "\n    #define( $body )\n      {\n  \
+            \    #foreach( $token in $input.path('$').split('&') )\n        #set(\
+            \ $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size()\
+            \ )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0]))\
+            \ )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n    \
+            \      #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n\
+            \        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop\
+            \ )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key)\
+            \ )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\
+            \\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext\
+            \ ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n   \
+            \ \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\"\
+            ,\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n\
+            \       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\
+            \n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\
+            \n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\
+            \n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n  \
+            \  #set( $map = $context.identity )\n    \"identity\": $loop\n\n    #set(\
+            \ $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+        passthroughBehavior: "never"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Credentials: "'false'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{statusCode:200}"
+        passthroughBehavior: "when_no_match"
+# Devices****************************************************************************
+  /Devices/get-devices:
+    post:
+      consumes:
+      - "application/json"
+      - "application/x-www-form-urlencoded"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "422":
+          description: "422 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "401":
+          description: "401 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "502":
+          description: "502 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "403":
+          description: "403 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "404":
+          description: "404 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "504":
+          description: "504 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+      - iHydroGarden-user-pool: []
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::494367507588:role/API_Gateway_Invoke_Lambda_Role"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:494367507588:function:getDevices/invocations"
+        responses:
+          ([\s\S]*\[504\][\s\S]*)|(^[Task timed out].*):
+            statusCode: "504"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[404\][\s\S]*':
+            statusCode: "404"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[502\][\s\S]*':
+            statusCode: "502"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[401\][\s\S]*':
+            statusCode: "401"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[403\][\s\S]*':
+            statusCode: "403"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[400\][\s\S]*':
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*(Process\s?exited\s?before\s?completing\s?request|\[500\])[\s\S]*':
+            statusCode: "500"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[422\][\s\S]*':
+            statusCode: "422"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{ \n    \"data\" : $input.json('$')\n}"
+          application/x-www-form-urlencoded: "\n    #define( $body )\n      {\n  \
+            \    #foreach( $token in $input.path('$').split('&') )\n        #set(\
+            \ $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size()\
+            \ )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0]))\
+            \ )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n    \
+            \      #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n\
+            \        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop\
+            \ )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key)\
+            \ )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\
+            \\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext\
+            \ ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n   \
+            \ \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\"\
+            ,\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n\
+            \       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\
+            \n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\
+            \n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\
+            \n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n  \
+            \  #set( $map = $context.identity )\n    \"identity\": $loop\n\n    #set(\
+            \ $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+        passthroughBehavior: "never"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Credentials: "'false'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{statusCode:200}"
+        passthroughBehavior: "when_no_match"
+# DynamoDB**************************************************************************
+  /DynamoDB/create-item:
+    post:
+      consumes:
+      - "application/json"
+      - "application/x-www-form-urlencoded"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "422":
+          description: "422 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "401":
+          description: "401 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "502":
+          description: "502 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "403":
+          description: "403 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "404":
+          description: "404 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "504":
+          description: "504 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+      - iHydroGarden-user-pool: []
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::494367507588:role/API_Gateway_Invoke_Lambda_Role"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:494367507588:function:createItem/invocations"
+        responses:
+          ([\s\S]*\[504\][\s\S]*)|(^[Task timed out].*):
+            statusCode: "504"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[404\][\s\S]*':
+            statusCode: "404"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[502\][\s\S]*':
+            statusCode: "502"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[401\][\s\S]*':
+            statusCode: "401"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[403\][\s\S]*':
+            statusCode: "403"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[400\][\s\S]*':
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*(Process\s?exited\s?before\s?completing\s?request|\[500\])[\s\S]*':
+            statusCode: "500"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[422\][\s\S]*':
+            statusCode: "422"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{ \n    \"data\" : $input.json('$')\n}"
+          application/x-www-form-urlencoded: "\n    #define( $body )\n      {\n  \
+            \    #foreach( $token in $input.path('$').split('&') )\n        #set(\
+            \ $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size()\
+            \ )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0]))\
+            \ )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n    \
+            \      #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n\
+            \        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop\
+            \ )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key)\
+            \ )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\
+            \\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext\
+            \ ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n   \
+            \ \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\"\
+            ,\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n\
+            \       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\
+            \n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\
+            \n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\
+            \n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n  \
+            \  #set( $map = $context.identity )\n    \"identity\": $loop\n\n    #set(\
+            \ $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+        passthroughBehavior: "never"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Credentials: "'false'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{statusCode:200}"
+        passthroughBehavior: "when_no_match"
+  /DynamoDB/get-item:
+    post:
+      consumes:
+      - "application/json"
+      - "application/x-www-form-urlencoded"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "422":
+          description: "422 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "401":
+          description: "401 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "502":
+          description: "502 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "403":
+          description: "403 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "404":
+          description: "404 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "504":
+          description: "504 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+      - iHydroGarden-user-pool: []
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::494367507588:role/API_Gateway_Invoke_Lambda_Role"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:494367507588:function:getItem/invocations"
+        responses:
+          ([\s\S]*\[504\][\s\S]*)|(^[Task timed out].*):
+            statusCode: "504"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[404\][\s\S]*':
+            statusCode: "404"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[502\][\s\S]*':
+            statusCode: "502"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[401\][\s\S]*':
+            statusCode: "401"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[403\][\s\S]*':
+            statusCode: "403"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[400\][\s\S]*':
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*(Process\s?exited\s?before\s?completing\s?request|\[500\])[\s\S]*':
+            statusCode: "500"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[422\][\s\S]*':
+            statusCode: "422"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{ \n    \"data\" : $input.json('$')\n}"
+          application/x-www-form-urlencoded: "\n    #define( $body )\n      {\n  \
+            \    #foreach( $token in $input.path('$').split('&') )\n        #set(\
+            \ $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size()\
+            \ )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0]))\
+            \ )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n    \
+            \      #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n\
+            \        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop\
+            \ )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key)\
+            \ )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\
+            \\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext\
+            \ ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n   \
+            \ \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\"\
+            ,\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n\
+            \       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\
+            \n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\
+            \n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\
+            \n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n  \
+            \  #set( $map = $context.identity )\n    \"identity\": $loop\n\n    #set(\
+            \ $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+        passthroughBehavior: "never"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Credentials: "'false'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{statusCode:200}"
+        passthroughBehavior: "when_no_match"
+  /DynamoDB/query-item:
+    post:
+      consumes:
+      - "application/json"
+      - "application/x-www-form-urlencoded"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "422":
+          description: "422 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "401":
+          description: "401 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "502":
+          description: "502 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "403":
+          description: "403 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "404":
+          description: "404 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "504":
+          description: "504 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+      - iHydroGarden-user-pool: []
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::494367507588:role/API_Gateway_Invoke_Lambda_Role"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:494367507588:function:queryItem/invocations"
+        responses:
+          ([\s\S]*\[504\][\s\S]*)|(^[Task timed out].*):
+            statusCode: "504"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[404\][\s\S]*':
+            statusCode: "404"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[502\][\s\S]*':
+            statusCode: "502"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[401\][\s\S]*':
+            statusCode: "401"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[403\][\s\S]*':
+            statusCode: "403"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[400\][\s\S]*':
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*(Process\s?exited\s?before\s?completing\s?request|\[500\])[\s\S]*':
+            statusCode: "500"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[422\][\s\S]*':
+            statusCode: "422"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{ \n    \"data\" : $input.json('$')\n}"
+          application/x-www-form-urlencoded: "\n    #define( $body )\n      {\n  \
+            \    #foreach( $token in $input.path('$').split('&') )\n        #set(\
+            \ $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size()\
+            \ )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0]))\
+            \ )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n    \
+            \      #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n\
+            \        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop\
+            \ )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key)\
+            \ )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\
+            \\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext\
+            \ ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n   \
+            \ \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\"\
+            ,\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n\
+            \       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\
+            \n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\
+            \n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\
+            \n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n  \
+            \  #set( $map = $context.identity )\n    \"identity\": $loop\n\n    #set(\
+            \ $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+        passthroughBehavior: "never"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Credentials: "'false'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{statusCode:200}"
+        passthroughBehavior: "when_no_match"
+  /DynamoDB/update-item:
+    post:
+      consumes:
+      - "application/json"
+      - "application/x-www-form-urlencoded"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "422":
+          description: "422 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "401":
+          description: "401 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "502":
+          description: "502 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "403":
+          description: "403 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "404":
+          description: "404 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "504":
+          description: "504 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+      - iHydroGarden-user-pool: []
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::494367507588:role/API_Gateway_Invoke_Lambda_Role"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:494367507588:function:updateItem/invocations"
+        responses:
+          ([\s\S]*\[504\][\s\S]*)|(^[Task timed out].*):
+            statusCode: "504"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[404\][\s\S]*':
+            statusCode: "404"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[502\][\s\S]*':
+            statusCode: "502"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[401\][\s\S]*':
+            statusCode: "401"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[403\][\s\S]*':
+            statusCode: "403"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[400\][\s\S]*':
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*(Process\s?exited\s?before\s?completing\s?request|\[500\])[\s\S]*':
+            statusCode: "500"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[422\][\s\S]*':
+            statusCode: "422"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{ \n    \"data\" : $input.json('$')\n}"
+          application/x-www-form-urlencoded: "\n    #define( $body )\n      {\n  \
+            \    #foreach( $token in $input.path('$').split('&') )\n        #set(\
+            \ $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size()\
+            \ )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0]))\
+            \ )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n    \
+            \      #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n\
+            \        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop\
+            \ )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key)\
+            \ )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\
+            \\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext\
+            \ ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n   \
+            \ \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\"\
+            ,\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n\
+            \       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\
+            \n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\
+            \n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\
+            \n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n  \
+            \  #set( $map = $context.identity )\n    \"identity\": $loop\n\n    #set(\
+            \ $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+        passthroughBehavior: "never"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Credentials: "'false'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{statusCode:200}"
+        passthroughBehavior: "when_no_match"
+# IoT*******************************************************************************  
+  /Iot/get-historical-data:
+    post:
+      consumes:
+      - "application/json"
+      - "application/x-www-form-urlencoded"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "422":
+          description: "422 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "401":
+          description: "401 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "502":
+          description: "502 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "403":
+          description: "403 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "404":
+          description: "404 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "504":
+          description: "504 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+      - iHydroGarden-user-pool: []
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::494367507588:role/API_Gateway_Invoke_Lambda_Role"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:494367507588:function:getHistoricalData/invocations"
+        responses:
+          ([\s\S]*\[504\][\s\S]*)|(^[Task timed out].*):
+            statusCode: "504"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[404\][\s\S]*':
+            statusCode: "404"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[502\][\s\S]*':
+            statusCode: "502"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[401\][\s\S]*':
+            statusCode: "401"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[403\][\s\S]*':
+            statusCode: "403"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[400\][\s\S]*':
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*(Process\s?exited\s?before\s?completing\s?request|\[500\])[\s\S]*':
+            statusCode: "500"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[422\][\s\S]*':
+            statusCode: "422"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{ \n    \"data\" : $input.json('$')\n}"
+          application/x-www-form-urlencoded: "\n    #define( $body )\n      {\n  \
+            \    #foreach( $token in $input.path('$').split('&') )\n        #set(\
+            \ $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size()\
+            \ )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0]))\
+            \ )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n    \
+            \      #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n\
+            \        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop\
+            \ )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key)\
+            \ )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\
+            \\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext\
+            \ ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n   \
+            \ \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\"\
+            ,\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n\
+            \       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\
+            \n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\
+            \n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\
+            \n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n  \
+            \  #set( $map = $context.identity )\n    \"identity\": $loop\n\n    #set(\
+            \ $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+        passthroughBehavior: "never"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Credentials: "'false'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{statusCode:200}"
+        passthroughBehavior: "when_no_match"
+  /Iot/get-wusage-by-mode:
+    post:
+      consumes:
+      - "application/json"
+      - "application/x-www-form-urlencoded"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "422":
+          description: "422 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "401":
+          description: "401 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "502":
+          description: "502 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "403":
+          description: "403 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "404":
+          description: "404 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "504":
+          description: "504 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+      - iHydroGarden-user-pool: []
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::494367507588:role/API_Gateway_Invoke_Lambda_Role"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:494367507588:function:getWUsageByMode/invocations"
+        responses:
+          ([\s\S]*\[504\][\s\S]*)|(^[Task timed out].*):
+            statusCode: "504"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[404\][\s\S]*':
+            statusCode: "404"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[502\][\s\S]*':
+            statusCode: "502"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[401\][\s\S]*':
+            statusCode: "401"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[403\][\s\S]*':
+            statusCode: "403"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[400\][\s\S]*':
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*(Process\s?exited\s?before\s?completing\s?request|\[500\])[\s\S]*':
+            statusCode: "500"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[422\][\s\S]*':
+            statusCode: "422"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{ \n    \"data\" : $input.json('$')\n}"
+          application/x-www-form-urlencoded: "\n    #define( $body )\n      {\n  \
+            \    #foreach( $token in $input.path('$').split('&') )\n        #set(\
+            \ $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size()\
+            \ )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0]))\
+            \ )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n    \
+            \      #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n\
+            \        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop\
+            \ )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key)\
+            \ )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\
+            \\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext\
+            \ ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n   \
+            \ \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\"\
+            ,\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n\
+            \       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\
+            \n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\
+            \n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\
+            \n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n  \
+            \  #set( $map = $context.identity )\n    \"identity\": $loop\n\n    #set(\
+            \ $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+        passthroughBehavior: "never"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Credentials: "'false'"
+              method.response.header.Access-Control-Allow-Methods: "'OPTIONS,POST'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{statusCode:200}"
+        passthroughBehavior: "when_no_match"
+# Projects**************************************************************************
+  /Projects/get-projects:
+    post:
+      consumes:
+      - "application/json"
+      - "application/x-www-form-urlencoded"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "422":
+          description: "422 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "401":
+          description: "401 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "502":
+          description: "502 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "403":
+          description: "403 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "404":
+          description: "404 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "504":
+          description: "504 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+      - iHydroGarden-user-pool: []
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::494367507588:role/API_Gateway_Invoke_Lambda_Role"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:494367507588:function:getProjects/invocations"
+        responses:
+          ([\s\S]*\[504\][\s\S]*)|(^[Task timed out].*):
+            statusCode: "504"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[404\][\s\S]*':
+            statusCode: "404"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[502\][\s\S]*':
+            statusCode: "502"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[401\][\s\S]*':
+            statusCode: "401"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[403\][\s\S]*':
+            statusCode: "403"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[400\][\s\S]*':
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*(Process\s?exited\s?before\s?completing\s?request|\[500\])[\s\S]*':
+            statusCode: "500"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[422\][\s\S]*':
+            statusCode: "422"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{ \n    \"data\" : $input.json('$')\n}"
+          application/x-www-form-urlencoded: "\n    #define( $body )\n      {\n  \
+            \    #foreach( $token in $input.path('$').split('&') )\n        #set(\
+            \ $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size()\
+            \ )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0]))\
+            \ )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n    \
+            \      #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n\
+            \        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop\
+            \ )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key)\
+            \ )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\
+            \\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext\
+            \ ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n   \
+            \ \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\"\
+            ,\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n\
+            \       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\
+            \n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\
+            \n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\
+            \n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n  \
+            \  #set( $map = $context.identity )\n    \"identity\": $loop\n\n    #set(\
+            \ $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+        passthroughBehavior: "never"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Credentials: "'false'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{statusCode:200}"
+        passthroughBehavior: "when_no_match"
+# Quicksight************************************************************************
+  /Quicksight/get-emb-url:
+    post:
+      consumes:
+      - "application/json"
+      - "application/x-www-form-urlencoded"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "422":
+          description: "422 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "401":
+          description: "401 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "403":
+          description: "403 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "502":
+          description: "502 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "404":
+          description: "404 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "504":
+          description: "504 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+      - iHydroGarden-user-pool: []
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        credentials: "arn:aws:iam::494367507588:role/API_Gateway_Invoke_Lambda_Role"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:494367507588:function:getQuicksightEmbedUrl/invocations"
+        responses:
+          ([\s\S]*\[504\][\s\S]*)|(^[Task timed out].*):
+            statusCode: "504"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[404\][\s\S]*':
+            statusCode: "404"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[502\][\s\S]*':
+            statusCode: "502"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[401\][\s\S]*':
+            statusCode: "401"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[403\][\s\S]*':
+            statusCode: "403"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[400\][\s\S]*':
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*(Process\s?exited\s?before\s?completing\s?request|\[500\])[\s\S]*':
+            statusCode: "500"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[422\][\s\S]*':
+            statusCode: "422"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{ \n    \"data\" : $input.json('$')\n}"
+          application/x-www-form-urlencoded: "\n    #define( $body )\n      {\n  \
+            \    #foreach( $token in $input.path('$').split('&') )\n        #set(\
+            \ $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size()\
+            \ )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0]))\
+            \ )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n    \
+            \      #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n\
+            \        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop\
+            \ )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key)\
+            \ )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\
+            \\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext\
+            \ ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n   \
+            \ \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\"\
+            ,\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n\
+            \       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\
+            \n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\
+            \n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\
+            \n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n  \
+            \  #set( $map = $context.identity )\n    \"identity\": $loop\n\n    #set(\
+            \ $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+        passthroughBehavior: "never"
+        type: "aws"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Credentials: "'false'"
+              method.response.header.Access-Control-Allow-Methods: "'OPTIONS,POST'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{statusCode:200}"
+        passthroughBehavior: "when_no_match"
+        type: "mock"
+# Schedule**************************************************************************
+  /Schedule/get-schedule:
+    post:
+      consumes:
+      - "application/json"
+      - "application/x-www-form-urlencoded"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "422":
+          description: "422 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "401":
+          description: "401 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "502":
+          description: "502 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "403":
+          description: "403 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "404":
+          description: "404 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "504":
+          description: "504 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+      - iHydroGarden-user-pool: []
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::494367507588:role/API_Gateway_Invoke_Lambda_Role"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:494367507588:function:getSchedule/invocations"
+        responses:
+          ([\s\S]*\[504\][\s\S]*)|(^[Task timed out].*):
+            statusCode: "504"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[404\][\s\S]*':
+            statusCode: "404"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[502\][\s\S]*':
+            statusCode: "502"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[401\][\s\S]*':
+            statusCode: "401"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[403\][\s\S]*':
+            statusCode: "403"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[400\][\s\S]*':
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*(Process\s?exited\s?before\s?completing\s?request|\[500\])[\s\S]*':
+            statusCode: "500"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[422\][\s\S]*':
+            statusCode: "422"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{ \n    \"data\" : $input.json('$')\n}"
+          application/x-www-form-urlencoded: "\n    #define( $body )\n      {\n  \
+            \    #foreach( $token in $input.path('$').split('&') )\n        #set(\
+            \ $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size()\
+            \ )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0]))\
+            \ )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n    \
+            \      #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n\
+            \        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop\
+            \ )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key)\
+            \ )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\
+            \\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext\
+            \ ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n   \
+            \ \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\"\
+            ,\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n\
+            \       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\
+            \n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\
+            \n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\
+            \n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n  \
+            \  #set( $map = $context.identity )\n    \"identity\": $loop\n\n    #set(\
+            \ $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+        passthroughBehavior: "never"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Credentials: "'false'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{statusCode:200}"
+        passthroughBehavior: "when_no_match"
+  /Schedule/get-schedule-slot:
+    post:
+      consumes:
+      - "application/json"
+      - "application/x-www-form-urlencoded"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "422":
+          description: "422 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "401":
+          description: "401 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "502":
+          description: "502 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "403":
+          description: "403 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "404":
+          description: "404 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "504":
+          description: "504 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+      - iHydroGarden-user-pool: []
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::494367507588:role/API_Gateway_Invoke_Lambda_Role"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:494367507588:function:getScheduleSlot/invocations"
+        responses:
+          ([\s\S]*\[504\][\s\S]*)|(^[Task timed out].*):
+            statusCode: "504"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[404\][\s\S]*':
+            statusCode: "404"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[502\][\s\S]*':
+            statusCode: "502"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[401\][\s\S]*':
+            statusCode: "401"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[403\][\s\S]*':
+            statusCode: "403"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[400\][\s\S]*':
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*(Process\s?exited\s?before\s?completing\s?request|\[500\])[\s\S]*':
+            statusCode: "500"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[422\][\s\S]*':
+            statusCode: "422"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{ \n    \"data\" : $input.json('$')\n}"
+          application/x-www-form-urlencoded: "\n    #define( $body )\n      {\n  \
+            \    #foreach( $token in $input.path('$').split('&') )\n        #set(\
+            \ $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size()\
+            \ )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0]))\
+            \ )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n    \
+            \      #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n\
+            \        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop\
+            \ )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key)\
+            \ )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\
+            \\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext\
+            \ ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n   \
+            \ \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\"\
+            ,\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n\
+            \       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\
+            \n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\
+            \n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\
+            \n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n  \
+            \  #set( $map = $context.identity )\n    \"identity\": $loop\n\n    #set(\
+            \ $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+        passthroughBehavior: "never"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Credentials: "'false'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{statusCode:200}"
+        passthroughBehavior: "when_no_match"
+  /Schedule/set-schedule:
+    post:
+      consumes:
+      - "application/json"
+      - "application/x-www-form-urlencoded"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "422":
+          description: "422 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "401":
+          description: "401 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "502":
+          description: "502 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "403":
+          description: "403 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "404":
+          description: "404 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "504":
+          description: "504 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+      - iHydroGarden-user-pool: []
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::494367507588:role/API_Gateway_Invoke_Lambda_Role"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:494367507588:function:setSchedule/invocations"
+        responses:
+          ([\s\S]*\[504\][\s\S]*)|(^[Task timed out].*):
+            statusCode: "504"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[404\][\s\S]*':
+            statusCode: "404"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[502\][\s\S]*':
+            statusCode: "502"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[401\][\s\S]*':
+            statusCode: "401"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[403\][\s\S]*':
+            statusCode: "403"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[400\][\s\S]*':
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*(Process\s?exited\s?before\s?completing\s?request|\[500\])[\s\S]*':
+            statusCode: "500"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[422\][\s\S]*':
+            statusCode: "422"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{ \n    \"data\" : $input.json('$')\n}"
+          application/x-www-form-urlencoded: "\n    #define( $body )\n      {\n  \
+            \    #foreach( $token in $input.path('$').split('&') )\n        #set(\
+            \ $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size()\
+            \ )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0]))\
+            \ )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n    \
+            \      #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n\
+            \        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop\
+            \ )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key)\
+            \ )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\
+            \\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext\
+            \ ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n   \
+            \ \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\"\
+            ,\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n\
+            \       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\
+            \n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\
+            \n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\
+            \n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n  \
+            \  #set( $map = $context.identity )\n    \"identity\": $loop\n\n    #set(\
+            \ $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+        passthroughBehavior: "never"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Credentials: "'false'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{statusCode:200}"
+        passthroughBehavior: "when_no_match"
+  /Schedule/set-schedule-slot:
+    post:
+      consumes:
+      - "application/json"
+      - "application/x-www-form-urlencoded"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "422":
+          description: "422 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "401":
+          description: "401 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "502":
+          description: "502 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "403":
+          description: "403 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "404":
+          description: "404 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "504":
+          description: "504 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+      - iHydroGarden-user-pool: []
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::494367507588:role/API_Gateway_Invoke_Lambda_Role"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:494367507588:function:setScheduleSlot/invocations"
+        responses:
+          ([\s\S]*\[504\][\s\S]*)|(^[Task timed out].*):
+            statusCode: "504"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[404\][\s\S]*':
+            statusCode: "404"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[502\][\s\S]*':
+            statusCode: "502"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[401\][\s\S]*':
+            statusCode: "401"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[403\][\s\S]*':
+            statusCode: "403"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[400\][\s\S]*':
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*(Process\s?exited\s?before\s?completing\s?request|\[500\])[\s\S]*':
+            statusCode: "500"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[422\][\s\S]*':
+            statusCode: "422"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{ \n    \"data\" : $input.json('$')\n}"
+          application/x-www-form-urlencoded: "\n    #define( $body )\n      {\n  \
+            \    #foreach( $token in $input.path('$').split('&') )\n        #set(\
+            \ $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size()\
+            \ )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0]))\
+            \ )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n    \
+            \      #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n\
+            \        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop\
+            \ )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key)\
+            \ )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\
+            \\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext\
+            \ ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n   \
+            \ \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\"\
+            ,\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n\
+            \       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\
+            \n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\
+            \n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\
+            \n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n  \
+            \  #set( $map = $context.identity )\n    \"identity\": $loop\n\n    #set(\
+            \ $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+        passthroughBehavior: "never"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Credentials: "'false'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{statusCode:200}"
+        passthroughBehavior: "when_no_match"
+# Settings**************************************************************************
+  /Settings/get-soil-moisture-settings:
+    post:
+      consumes:
+      - "application/json"
+      - "application/x-www-form-urlencoded"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "422":
+          description: "422 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "401":
+          description: "401 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "502":
+          description: "502 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "403":
+          description: "403 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "404":
+          description: "404 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "504":
+          description: "504 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+      - iHydroGarden-user-pool: []
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::494367507588:role/API_Gateway_Invoke_Lambda_Role"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:494367507588:function:getSoilMoistureSettings/invocations"
+        responses:
+          ([\s\S]*\[504\][\s\S]*)|(^[Task timed out].*):
+            statusCode: "504"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[404\][\s\S]*':
+            statusCode: "404"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[502\][\s\S]*':
+            statusCode: "502"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[401\][\s\S]*':
+            statusCode: "401"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[403\][\s\S]*':
+            statusCode: "403"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[400\][\s\S]*':
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*(Process\s?exited\s?before\s?completing\s?request|\[500\])[\s\S]*':
+            statusCode: "500"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[422\][\s\S]*':
+            statusCode: "422"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{ \n    \"data\" : $input.json('$')\n}"
+          application/x-www-form-urlencoded: "\n    #define( $body )\n      {\n  \
+            \    #foreach( $token in $input.path('$').split('&') )\n        #set(\
+            \ $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size()\
+            \ )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0]))\
+            \ )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n    \
+            \      #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n\
+            \        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop\
+            \ )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key)\
+            \ )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\
+            \\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext\
+            \ ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n   \
+            \ \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\"\
+            ,\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n\
+            \       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\
+            \n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\
+            \n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\
+            \n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n  \
+            \  #set( $map = $context.identity )\n    \"identity\": $loop\n\n    #set(\
+            \ $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+        passthroughBehavior: "never"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Credentials: "'false'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{statusCode:200}"
+        passthroughBehavior: "when_no_match"
+  /Settings/get-valve-settings:
+    post:
+      consumes:
+      - "application/json"
+      - "application/x-www-form-urlencoded"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "422":
+          description: "422 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "401":
+          description: "401 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "502":
+          description: "502 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "403":
+          description: "403 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "404":
+          description: "404 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "504":
+          description: "504 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+      - iHydroGarden-user-pool: []
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::494367507588:role/API_Gateway_Invoke_Lambda_Role"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:494367507588:function:getValveSettings/invocations"
+        responses:
+          ([\s\S]*\[504\][\s\S]*)|(^[Task timed out].*):
+            statusCode: "504"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[404\][\s\S]*':
+            statusCode: "404"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[502\][\s\S]*':
+            statusCode: "502"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[401\][\s\S]*':
+            statusCode: "401"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[403\][\s\S]*':
+            statusCode: "403"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[400\][\s\S]*':
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*(Process\s?exited\s?before\s?completing\s?request|\[500\])[\s\S]*':
+            statusCode: "500"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[422\][\s\S]*':
+            statusCode: "422"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{ \n    \"data\" : $input.json('$')\n}"
+          application/x-www-form-urlencoded: "\n    #define( $body )\n      {\n  \
+            \    #foreach( $token in $input.path('$').split('&') )\n        #set(\
+            \ $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size()\
+            \ )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0]))\
+            \ )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n    \
+            \      #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n\
+            \        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop\
+            \ )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key)\
+            \ )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\
+            \\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext\
+            \ ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n   \
+            \ \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\"\
+            ,\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n\
+            \       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\
+            \n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\
+            \n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\
+            \n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n  \
+            \  #set( $map = $context.identity )\n    \"identity\": $loop\n\n    #set(\
+            \ $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+        passthroughBehavior: "never"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Credentials: "'false'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{statusCode:200}"
+        passthroughBehavior: "when_no_match"
+  /Settings/set-soil-moisture-settings:
+    post:
+      consumes:
+      - "application/json"
+      - "application/x-www-form-urlencoded"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "422":
+          description: "422 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "401":
+          description: "401 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "502":
+          description: "502 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "403":
+          description: "403 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "404":
+          description: "404 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "504":
+          description: "504 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+      - iHydroGarden-user-pool: []
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::494367507588:role/API_Gateway_Invoke_Lambda_Role"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:494367507588:function:setSoilMoistureSettings/invocations"
+        responses:
+          ([\s\S]*\[504\][\s\S]*)|(^[Task timed out].*):
+            statusCode: "504"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[404\][\s\S]*':
+            statusCode: "404"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[502\][\s\S]*':
+            statusCode: "502"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[401\][\s\S]*':
+            statusCode: "401"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[403\][\s\S]*':
+            statusCode: "403"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[400\][\s\S]*':
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*(Process\s?exited\s?before\s?completing\s?request|\[500\])[\s\S]*':
+            statusCode: "500"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[422\][\s\S]*':
+            statusCode: "422"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{ \n    \"data\" : $input.json('$')\n}"
+          application/x-www-form-urlencoded: "\n    #define( $body )\n      {\n  \
+            \    #foreach( $token in $input.path('$').split('&') )\n        #set(\
+            \ $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size()\
+            \ )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0]))\
+            \ )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n    \
+            \      #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n\
+            \        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop\
+            \ )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key)\
+            \ )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\
+            \\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext\
+            \ ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n   \
+            \ \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\"\
+            ,\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n\
+            \       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\
+            \n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\
+            \n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\
+            \n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n  \
+            \  #set( $map = $context.identity )\n    \"identity\": $loop\n\n    #set(\
+            \ $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+        passthroughBehavior: "never"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Credentials: "'false'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{statusCode:200}"
+        passthroughBehavior: "when_no_match"
+  /Settings/set-valve-settings:
+    post:
+      consumes:
+      - "application/json"
+      - "application/x-www-form-urlencoded"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "422":
+          description: "422 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "401":
+          description: "401 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "502":
+          description: "502 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "403":
+          description: "403 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "404":
+          description: "404 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "504":
+          description: "504 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+      - iHydroGarden-user-pool: []
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::494367507588:role/API_Gateway_Invoke_Lambda_Role"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:494367507588:function:setValveSettings/invocations"
+        responses:
+          ([\s\S]*\[504\][\s\S]*)|(^[Task timed out].*):
+            statusCode: "504"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[404\][\s\S]*':
+            statusCode: "404"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[502\][\s\S]*':
+            statusCode: "502"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[401\][\s\S]*':
+            statusCode: "401"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[403\][\s\S]*':
+            statusCode: "403"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[400\][\s\S]*':
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*(Process\s?exited\s?before\s?completing\s?request|\[500\])[\s\S]*':
+            statusCode: "500"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[422\][\s\S]*':
+            statusCode: "422"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{ \n    \"data\" : $input.json('$')\n}"
+          application/x-www-form-urlencoded: "\n    #define( $body )\n      {\n  \
+            \    #foreach( $token in $input.path('$').split('&') )\n        #set(\
+            \ $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size()\
+            \ )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0]))\
+            \ )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n    \
+            \      #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n\
+            \        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop\
+            \ )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key)\
+            \ )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\
+            \\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext\
+            \ ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n   \
+            \ \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\"\
+            ,\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n\
+            \       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\
+            \n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\
+            \n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\
+            \n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n  \
+            \  #set( $map = $context.identity )\n    \"identity\": $loop\n\n    #set(\
+            \ $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+        passthroughBehavior: "never"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Credentials: "'false'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{statusCode:200}"
+        passthroughBehavior: "when_no_match"
+# Status**************************************************************************
+  /Status/get-status:
+    post:
+      consumes:
+      - "application/json"
+      - "application/x-www-form-urlencoded"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "422":
+          description: "422 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "401":
+          description: "401 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "502":
+          description: "502 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "403":
+          description: "403 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "404":
+          description: "404 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "504":
+          description: "504 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+      - iHydroGarden-user-pool: []
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::494367507588:role/API_Gateway_Invoke_Lambda_Role"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:494367507588:function:getStatus/invocations"
+        responses:
+          ([\s\S]*\[504\][\s\S]*)|(^[Task timed out].*):
+            statusCode: "504"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[404\][\s\S]*':
+            statusCode: "404"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[502\][\s\S]*':
+            statusCode: "502"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[401\][\s\S]*':
+            statusCode: "401"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[403\][\s\S]*':
+            statusCode: "403"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[400\][\s\S]*':
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*(Process\s?exited\s?before\s?completing\s?request|\[500\])[\s\S]*':
+            statusCode: "500"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[422\][\s\S]*':
+            statusCode: "422"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{ \n    \"data\" : $input.json('$')\n}"
+          application/x-www-form-urlencoded: "\n    #define( $body )\n      {\n  \
+            \    #foreach( $token in $input.path('$').split('&') )\n        #set(\
+            \ $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size()\
+            \ )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0]))\
+            \ )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n    \
+            \      #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n\
+            \        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop\
+            \ )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key)\
+            \ )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\
+            \\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext\
+            \ ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n   \
+            \ \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\"\
+            ,\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n\
+            \       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\
+            \n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\
+            \n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\
+            \n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n  \
+            \  #set( $map = $context.identity )\n    \"identity\": $loop\n\n    #set(\
+            \ $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+        passthroughBehavior: "never"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Credentials: "'false'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{statusCode:200}"
+        passthroughBehavior: "when_no_match"
+  /Status/switch-valve:
+    post:
+      consumes:
+      - "application/json"
+      - "application/x-www-form-urlencoded"
+      parameters:
+      - name: "Authorization"
+        in: "header"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "422":
+          description: "422 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "400":
+          description: "400 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "500":
+          description: "500 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "401":
+          description: "401 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "502":
+          description: "502 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "403":
+          description: "403 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "404":
+          description: "404 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        "504":
+          description: "504 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      security:
+      - iHydroGarden-user-pool: []
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        credentials: "arn:aws:iam::494367507588:role/API_Gateway_Invoke_Lambda_Role"
+        httpMethod: "POST"
+        uri: "arn:aws:apigateway:ap-southeast-1:lambda:path/2015-03-31/functions/arn:aws:lambda:ap-southeast-1:494367507588:function:switchValve/invocations"
+        responses:
+          ([\s\S]*\[504\][\s\S]*)|(^[Task timed out].*):
+            statusCode: "504"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[404\][\s\S]*':
+            statusCode: "404"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[502\][\s\S]*':
+            statusCode: "502"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[401\][\s\S]*':
+            statusCode: "401"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[403\][\s\S]*':
+            statusCode: "403"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[400\][\s\S]*':
+            statusCode: "400"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*(Process\s?exited\s?before\s?completing\s?request|\[500\])[\s\S]*':
+            statusCode: "500"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+          '[\s\S]*\[422\][\s\S]*':
+            statusCode: "422"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{ \n    \"data\" : $input.json('$')\n}"
+          application/x-www-form-urlencoded: "\n    #define( $body )\n      {\n  \
+            \    #foreach( $token in $input.path('$').split('&') )\n        #set(\
+            \ $keyVal = $token.split('=') )\n        #set( $keyValSize = $keyVal.size()\
+            \ )\n        #if( $keyValSize >= 1 )\n          #set( $key = $util.escapeJavaScript($util.urlDecode($keyVal[0]))\
+            \ )\n          #if( $keyValSize >= 2 )\n            #set($val = $util.escapeJavaScript($util.urlDecode($keyVal[1])).replaceAll(\"\
+            \\\\'\",\"'\"))\n          #else\n            #set( $val = '' )\n    \
+            \      #end\n          \"$key\": \"$val\"#if($foreach.hasNext),#end\n\
+            \        #end\n      #end\n      }\n    #end\n\n    \n  #define( $loop\
+            \ )\n    {\n    #foreach($key in $map.keySet())\n        #set( $k = $util.escapeJavaScript($key)\
+            \ )\n        #set( $v = $util.escapeJavaScript($map.get($key)).replaceAll(\"\
+            \\\\'\", \"'\") )\n        \"$k\":\n          \"$v\"\n          #if( $foreach.hasNext\
+            \ ) , #end\n    #end\n    }\n  #end\n\n  {\n    \"body\": $body,\n   \
+            \ \"method\": \"$context.httpMethod\",\n    \"principalId\": \"$context.authorizer.principalId\"\
+            ,\n    \"stage\": \"$context.stage\",\n\n    \"cognitoPoolClaims\" : {\n\
+            \       \n       \"sub\": \"$context.authorizer.claims.sub\"\n    },\n\
+            \n    #set( $map = $input.params().header )\n    \"headers\": $loop,\n\
+            \n    #set( $map = $input.params().querystring )\n    \"query\": $loop,\n\
+            \n    #set( $map = $input.params().path )\n    \"path\": $loop,\n\n  \
+            \  #set( $map = $context.identity )\n    \"identity\": $loop\n\n    #set(\
+            \ $map = $stageVariables )\n    \"stageVariables\": $loop\n  }\n\n  "
+        passthroughBehavior: "never"
+    options:
+      consumes:
+      - "application/json"
+      responses:
+        "200":
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+            Access-Control-Allow-Methods:
+              type: "string"
+            Access-Control-Allow-Credentials:
+              type: "string"
+            Access-Control-Allow-Headers:
+              type: "string"
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Credentials: "'false'"
+              method.response.header.Access-Control-Allow-Methods: "'POST,OPTIONS'"
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{statusCode:200}"
+        passthroughBehavior: "when_no_match"
+  /Test:
+    get:
+      consumes:
+      - "application/json"
+      responses: {}
+      x-amazon-apigateway-request-validator: "Validate body and query string parameters"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+# Security Definitions (END OF paths)***********************************************
+securityDefinitions:
+  iHydroGarden-user-pool:
+    type: "apiKey"
+    name: "Authorization"
+    in: "header"
+    x-amazon-apigateway-authtype: "cognito_user_pools"
+    x-amazon-apigateway-authorizer:
+      providerARNs:
+      - "arn:aws:cognito-idp:ap-southeast-1:494367507588:userpool/ap-southeast-1_YZVueVmKp"
+      type: "cognito_user_pools"
+  

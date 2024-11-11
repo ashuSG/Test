@@ -1,0 +1,18 @@
+@font-face {
+    font-family: "Amazon Ember";
+    src: url(../../../dist/css/amazon-ember-cufonfonts/Amazon\ Ember.ttf);
+}
+
+.page-header{
+    border-bottom: none !important;
+}
+
+body{
+    font-family: "Amazon Ember" !important;
+    height: 900px !important;
+    min-height: 100vh !important;
+}
+
+/* html{
+    height:100%
+} */

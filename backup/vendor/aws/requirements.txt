@@ -1,0 +1,4 @@
+AWS.S3
+AWS.QuickSight
+
+arn:aws:s3:::ihydrogarden/index.html,arn:aws:s3:::ihydrogarden/style.css,arn:aws:s3:::ihydrogarden/js/auth.js,arn:aws:s3:::ihydrogarden/pages/ihydrogarden/images/netafarmx_logo.png,arn:aws:s3:::ihydrogarden/pages/ihydrogarden/js/gvars.js,arn:aws:s3:::ihydrogarden/pages/ihydrogarden/css/*,arn:aws:s3:::ihydrogarden/dist/*,arn:aws:s3:::ihydrogarden/vendor/*

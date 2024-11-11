@@ -1,0 +1,124 @@
+div {
+  min-width: min-content;
+}
+
+#data-titles li {
+  color: rgb(255,255,255);
+  padding: 0px 0px 10px 0px;
+}
+
+#graphdiv2 {
+  height: 500px;
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+  color: black;
+  background-color: inherit;
+}
+
+label {
+  color: rgb(255,255,255);
+  margin-bottom: 0px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-right: 6px;
+  padding-left: 6px;
+}
+
+input[type=date] {
+  margin-right: 5px;
+  margin-left: 5px;
+  padding-left: 5px;
+}
+
+.row.setting-bar {
+  padding-left: 0px;
+  padding-right: 0px;
+  margin-bottom: 5px;
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+@media (min-width: 992px) {
+  .input-group.date {
+    width: 140px;
+  }
+}
+
+@media (min-width: 768px) {
+  .form-group.row.col-lg-4 {
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+  }
+}
+
+@media (min-width: 768px) {
+  #apply-chart-setting-btn {
+    padding-right: 15px;
+    padding-left: 15px;
+    height: 37px;
+    margin-top: 30px;
+  }
+}
+
+.form-group.col.col-lg-4 {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+@media (min-width: 992px) {
+  .form-group.row.col-lg-4 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+@media (min-width: 992px) {
+  #apply-chart-setting-btn {
+    margin-top: 0px;
+  }
+}
+
+
+.data-list {
+  margin: 0px;
+  float: left;
+  height: 34px;
+}
+
+#chart_start_time {
+  width: max-content;
+}
+
+#chart_end_time {
+  width: max-content;
+}
+
+.data-list {
+  width: 100%;
+}
+
+#data-chart-div {
+  max-width: 1500px;
+}
+
+input[type=checkbox] .chart-names {
+  /* height: 34px; */
+  /* display:inline-block; */
+  margin: 6px 0px 0px;
+}
+
+.data-names-bar {
+  text-align: left;
+}
+
+.form-check {
+  padding-left: 15px;
+  padding-right: 15px;
+}

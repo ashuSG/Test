@@ -1,0 +1,45 @@
+body{
+    background-image: url(dist/images/wpwp.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+#image{
+    margin-top: 60px;
+}
+
+.login-panel{
+    width: 600px;
+}
+
+.form-control{
+    text-align: center;
+}
+
+@media (max-width: 1510px){
+    #immage{
+        width: 450px;
+        margin-bottom: -20px;
+    }
+}
+
+@media (max-width:991px){
+	#immage{
+        width: 400px;
+		margin-bottom: -40px;
+	}
+    .login-panel{
+        width: 500px
+    }
+}
+
+@media (max-width: 600px){
+	#immage{
+        width: 300px;
+		margin-bottom: -20px;
+}
+    .login-panel{
+        width: 400px;
+    }
+}
+
+	

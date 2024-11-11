@@ -1,0 +1,14 @@
+.ct-chart-cover{
+    background-color: rgb(0, 0, 0, 0.1);
+    border: 2px dashed grey;
+    border-radius: 5px;
+}
+
+.ct-chart-cover{
+    padding-left: 90px;
+    margin-top: 10px;
+}
+
+.page-head{
+    color: black;
+}

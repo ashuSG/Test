@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- jqueryasdasd -->
+    <script src="../vendor/jquery/jquery.min.js"></script>
+    <script src="../js/auth.js"></script>
+    <!-- AWS Cognito SDK -->
+    <script src="../dist/js/aws-cognito-sdk.min.js"></script>
+    <script src="../dist/js/amazon-cognito-identity.min.js"></script>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../dist/images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="../vendor/bootstrap/css/bootstrap.min.css">
+    <!-- Custom CSS -->
+    <link href="ihydrogarden/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <title>iHydroTown - Controllers</title>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgjEaUbVXobKlI2FKXc9Y8hf_Qf4EXkjg" type="text/javascript"></script>
+
+</head>
+
+<body>
+    <div class="panel panel-main">
+        <h1>Controllers</h1>
+        <div id="googleMap" style="width:100%;height:750px;"></div>
+    </div>
+
+    <div class="panel panel-main">
+        <h2>Controllers</h2>
+        <!-- <p>Choose your desired device from the list below.</p> -->
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Controllers</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                </tr>
+            </thead>
+            <tbody id='deviceslist'>
+
+            </tbody>
+        </table>
+    </div>
+    
+</body>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../js/helper.js"></script>
+    <script src="../js/projects.js"></script>
+    <script src="./ihydrogarden/js/gvars.js"></script>
+</html>
+
+
+<script>
+    $(document).ready(listDevices);
+</script>

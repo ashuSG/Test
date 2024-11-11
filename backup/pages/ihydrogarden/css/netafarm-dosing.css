@@ -1,0 +1,20 @@
+#edit-schedule #undo-schedule{
+  background-color: #F6a612;
+  border-color: #F6a612;
+  color: white;
+}
+
+.edit-dosing-name:hover{
+  cursor: pointer;
+  color: #2fbef2;
+}
+
+span.disabled#edit-schedule-name {
+  cursor: pointer;
+  color: white;
+}
+
+.edit-dosing-name{
+    margin-left: 100px;
+    margin-top: -70px;
+}

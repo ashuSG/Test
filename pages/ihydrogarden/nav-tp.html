@@ -1,0 +1,74 @@
+<div class="navbar-header">
+    <a class="navbar-brand" href="dashboard.html"><img class='logo' src='images/netafarmx_logo_no_words.png'></img></a>
+</div>
+
+<ul class="nav navbar-top-links navbar-right">
+    <li data-toggle="tooltip" data-placement="bottom" title="Dashboard">
+        <a href="dashboard.html"><i class="navbar-icons fa fa-dashboard fa-fw"></i></a>
+    </li>
+    <li id="schedule-page" data-toggle="tooltip" data-placement="bottom" title="Multi-schedule">
+        <a href="multi-schedule.html"><i class="navbar-icons fa fa-table fa-fw"></i></a>
+    </li>
+    <!-- <li>
+        <a href="dosing.html"><i class="navbar-icons fa fa-tree fa-fw"></i></a>
+    </li> -->
+    <li id="powerbi-nav-page" data-toggle="tooltip" data-placement="bottom" title="Analytics">
+        <a href="power-bi.html"><i class="navbar-icons fa fa-bar-chart "></i></a>
+    </li>
+    <li id="climate-sensors-nav-page" data-toggle="tooltip" data-placement="bottom" title="Climate sensors" style="display: none;">
+        <a href="climate-sensors.html"><i class="navbar-icons fa fa-cloud"></i></a>
+    </li>
+    <li id="crop-sensors-nav-page" data-toggle="tooltip" data-placement="bottom" title="Crop sensors" style="display: none;">
+        <a href="crop-sensors.html"><i class="navbar-icons fa fa-envira"></i></a>
+    </li>
+    <li class="dropdown-nav" id="alerts-nav-page" data-toggle="tooltip" data-placement="bottom" title="Alerts">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="navbar-icons fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
+            <div id="alert-count"></div>
+        </a>
+        <ul class="dropdown-menu dropdown-messages">
+            <div id="alert-messages">
+            </div>
+            <li>
+                <a class="text-center" href="alerts.html">
+                    <strong>Read All Alerts</strong>
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <!-- /.dropdown -->
+
+    <li class="dropdown-nav"  data-toggle="tooltip" data-placement="bottom" title="Profile">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+            <i class="navbar-icons fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-user">
+            <li><a href="../ihydrogarden/locations.html"><i class="fa fa-gear fa-fw"></i> Change Asset</a>
+            <li><a href="../ihydrogarden/devices.html"><i class="fa fa-gear fa-fw"></i> Sensors</a>
+            </li>
+            <!-- <li class="divider"></li>
+            <li><a href="./profile.html"><i class="fa fa-sign-out fa-fw"></i> My Profile</a>
+            </li> -->
+            <li class="divider"></li>
+            <li>
+                <a onclick="signOut()" href="../../index.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+            </li>
+        </ul>
+        <!-- /.dropdown-user -->
+    </li>
+    <!-- /.dropdown -->
+</ul>
+<!-- Global variables JS -->
+<!-- <script src="js/gvars.js"></script> -->
+
+<!-- auth JS -->
+<script src="../../js/auth.js"></script>
+
+<!-- Nav JS -->
+<script src="js/nav.js"></script>
+
+<script>
+    startNavPoller(20000);
+</script>
+<!-- /.navbar-top-links -->

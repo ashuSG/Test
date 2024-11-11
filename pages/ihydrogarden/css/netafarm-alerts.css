@@ -1,0 +1,92 @@
+div {
+    min-width: min-content;
+}
+
+tr:nth-child(odd){
+    background-color: white !important;
+}
+
+tr:nth-child(even){
+    background-color: rgb(248, 249, 250) !important;
+}
+
+.table > thead > tr > th {
+    background: rgb(234, 234, 236) !important;
+   
+}
+
+table.dataTable thead .sorting::after{
+    right: .2em !important;
+    content: "↓" !important;
+    color: white !important;
+}
+
+table.dataTable thead .sorting_desc::after {
+    content: "↓";
+}
+
+.btn {
+    margin-bottom: 0px !important;
+    margin-top: 0px !important;
+}
+
+.panel-default{
+    max-width: 1300px !important;
+}
+/* Alerts Active################################################################## */
+
+#table_alerts_active{
+    padding-top: 0px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 0px;
+}
+
+#table_alerts_active_length{
+    float: left;
+    padding-top: 25px;
+    padding-left: 25px;
+}
+
+#table_alerts_active_filter{
+    padding-top: 25px;
+    padding-right: 25px;
+}
+
+#table_alerts_active_info{
+    float: left;
+    padding-left: 25px;
+}
+
+#table_alerts_active_paginate{
+    padding-right: 25px;
+}
+
+/* Alerts Log################################################################## */
+
+#table_alerts_log{
+    padding-top: 0px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 0px;
+}
+
+#table_alerts_log_length{
+    float: left;
+    padding-top: 25px;
+    padding-left: 25px;
+}
+
+#table_alerts_log_filter{
+    padding-top: 25px;
+    padding-right: 25px;
+}
+
+#table_alerts_log_info{
+    float: left;
+    padding-left: 25px;
+}
+
+#table_alerts_log_paginate{
+    padding-right: 25px;
+}

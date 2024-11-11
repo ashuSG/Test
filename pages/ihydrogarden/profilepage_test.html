@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <!-- jQuery -->
+    <script type="text/javascript" src="../../vendor/jquery/jquery.min.js"></script>
+
+    <!-- datetime related -->
+    <script type="text/javascript" src="./js/moment-with-locales.js"></script>
+    <script type="text/javascript" src="./js/bootstrap-datetimepicker.min.js"></script>
+    <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+    <!-- FullCalendar -->
+    <script src="../../vendor/fullcalendar/lib/main.min.js"></script>
+    
+    <!-- Bootstrap Core JavaScript -->
+    <script type="text/javascript" src="../../vendor/bootstrap/js/bootstrap.min.js"></script>
+    
+    <!-- AWS Cognito SDK -->
+    <script src="../../dist/js/aws-cognito-sdk.min.js"></script>
+    <script src="../../dist/js/amazon-cognito-identity.min.js"></script>
+
+    <title>iHydroGarden - Schedule</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="../../dist/images/favicon.ico" type="image/x-icon" />
+
+    <!-- Custom css -->
+    <link href="./css/ihydrogarden-loader.css" rel="stylesheet">
+    <link href="./css/netafarm.css" rel="stylesheet">
+    <link href="../../vendor/fullcalendar/lib/main.css" rel="stylesheet">
+    <link href="./css/netafarm-schedule.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./css/global.css">
+    <link href="/style.css" rel="stylesheet">
+    <link href="./css/profilepage_test.css" rel="stylesheet">
+    <link href="./css/ihydrogarden.css" rel="stylesheet">
+    
+
+    
+
+     <!-- Metis Menu Plugin JavaScript -->
+    <script type="text/javascript" src="../../vendor/metisMenu/metisMenu.min.js"></script>
+    <div id="testr"></div>
+
+</head>
+
+
+    <body>
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav id="nav-tp" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        </nav>
+        <script>
+            $("#nav-tp").load("nav-tp.html");
+        </script>
+
+        <div id="loader-wrapper">
+            <!-- <h1>" "</h1> -->
+            <div id="loader"></div>
+            <!-- <div class="loader-section section-left"></div>
+		<div class="loader-section section-right"></div> -->
+        </div>
+        <!-- /#loader-wrapper -->
+
+
+
+        <div class="form">
+            <input type="text" name="name" autocomplete="off" required>
+            <label for="name" class="label-name">
+                <span class="content-name">Name</span>
+            </label>
+        </div>
+</div>
+
+
+    <script type="text/javascript" defer>
+        $('head').append($('#testr').load("header-tp.html"));
+        $("input[type='text']").on("change", function () {
+            console.log("text changed!!")
+        });
+    </script>
+
+
+    <!-- Schedule Page JS -->
+    <script src="js/gvars.js" defer></script>
+    <script src="js/multi-schedule/util.js" defer></script>
+    <script src="js/multi-schedule/multi-schedule.js" defer></script>
+
+
+    <script src="../../nicelabel/js/jquery.min.js"></script>
+    <script src="../../nicelabel/js/jquery.nicelabel.js"></script>
+    
+    <!-- lodash JS -->
+    <script src="../../dist/js/lodash.min.js"></script>
+
+    <script src = "/Easy-Timezone-Picker-with-jQuery-Moment-js-Timezones/dist/timezones.full.js"></script>
+    <script src="js/profilepage/profile_pg.js"></script>
+
+</body>
+
+</html>

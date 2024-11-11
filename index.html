@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>iHydroTown Login</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="dist/images/favicon.ico" type="image/x-icon" />
+
+    <!-- Bootstrap Core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- MetisMenu CSS -->
+    <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="pages/ihydrogarden/css/sb-admin-2.css" rel="stylesheet">
+    <link rel="stylesheet" href="pages/ihydrogarden/css/login-page.css">
+    <link rel="stylesheet" href="pages/ihydrogarden/css/global.css">
+    <!-- Custom Fonts -->
+    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div class="container" id="login-page">
+        <div class="login-panel panel panel-default">
+            <div id="image">
+                <img id="immage" src="pages/ihydrogarden/images/netafarmx_logo_no_words.png" width="80px" alt="iHydroTown Logo">
+            </div>
+
+            <div class="row">
+                <div>
+                    <div class="login-panel panel panel-default" style="margin-top: 50px">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Login</h3>
+                        </div>
+                        <div class="panel-body" style="padding-top:35px">
+                            <!-- Login Form -->
+                            <form role="form">
+                                <div id="modal-error-zone"></div>
+                                <fieldset>
+                                    <div class="form-group">
+                                        <input class="form-control" id="username" placeholder="Username" name="username" type="text" autofocus aria-label="Username">
+                                    </div>
+                                    <div class="form-group">
+                                        <input class="form-control" id="password" placeholder="Password" name="password" type="password" aria-label="Password">
+                                    </div>
+                                </fieldset>
+                                <div class="container2">
+                                    <input class="btn btn-lg btn-success btn-block color1" type="submit" id="login" value="Login">
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- New Password Modal -->
+        <div class="modal fade" id="new-password-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 id="modal-title" class="modal-title">Set New Password</h4>
+                    </div>
+
+                    <div id="modal-error-zone"></div>
+                    <div id="modal-body" class="modal-body">
+                        <form role="form">
+                            <fieldset>
+                                <div class="form-group">
+                                    <input class="form-control" id="newPassword" placeholder="New Password" name="newPassword" type="password" aria-label="New Password">
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+
+                    <div id="modal-body-zone">
+                        <ul id="requirementList">
+                            <li>Password minimum length is 8 characters</li>
+                            <li>Password requires numbers</li>
+                            <li>Password requires uppercase letters</li>
+                            <li>Password requires lowercase letters</li>
+                            <li>Password requires special characters</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                        <input class="btn btn-success" type="submit" id="setNewPassword" value="Save">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="vendor/metisMenu/metisMenu.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="dist/js/sb-admin-2.js"></script>
+    <!-- AWS Cognito SDK -->
+    <script src="dist/js/aws-cognito-sdk.min.js"></script>
+    <script src="dist/js/amazon-cognito-identity.min.js"></script>
+    <script src="vendor/aws/aws-sdk-2.966.0.min.js"></script>
+    <!-- Web3 -->
+    <script src="dist/js/web3.min.js"></script>
+    <!-- Global Variables -->
+    <script src="pages/ihydrogarden/js/gvars.js"></script>
+    <!-- Auth Logic -->
+    <script src="js/auth.js"></script>
+
+    <script type="text/javascript">
+        // Clears local storage on page load
+        localStorage.clear();
+        
+        // Attach login function to the Login button
+        document.getElementById("login").addEventListener("click", function(event) {
+            event.preventDefault();
+            login();  // Calls the login function from auth.js
+        });
+    </script>
+</body>
+</html>

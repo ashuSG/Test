@@ -1,0 +1,90 @@
+valveHtml = 
+  '<div class="row row-irrigation valve" value="' + row + '">' + 
+    '<div class="col-xs-11 col-sm-11 col-sm-offset-0 col-md-12 col-md-offset-0 col-lg-10 col-lg-offset-1 row-text-align">' +
+    '</div>' +
+    '<div class="col-xs-10 col-xs-offset-0 col-sm-10 col-sm-offset-0 col-md-9 col-md-offset-1 col-lg-9 col-lg-offset-1">' +
+      '<div class="row">' +
+        '<div class="col-xs-10 col-xs-offset-2 col-sm-4 col-sm-offset-1 col-md-3 col-md-offset-0 col-lg-3 col-lg-offset-1 row-text-align" style="display:flex;flex-direction:row">' +
+          '<span class="col-xs-10 col-xs-offset-0 col-sm-4 col-sm-offset-0 col-md-8 col-md-offset-0 col-lg-4 col-lg-offset-0 row-text-align">' +
+            'Valve:' +
+          '</span>' +
+          '<select class="col-xs-10 col-xs-offset-0 col-sm-4 col-sm-offset-1 col-md-8 col-md-offset-0 col-lg-4 col-lg-offset-0 form-control valve-dropdown" id="valveDropdown-' + row + '" ' + disabledClass + '>' +
+            valveList +
+          '</select>' +
+        '</div>' +
+        '<div class="col-xs-10 col-xs-offset-2 col-sm-6 col-sm-offset-1 col-md-5 col-md-offset-0 col-lg-4 col-lg-offset-0 row-text-align" style="display:flex;flex-direction:row">' +
+          '<span class="col-xs-6 col-xs-offset-0 col-sm-5 col-sm-offset-1 col-md-3 col-md-offset-0 col-lg-4 col-lg-offset-0 row-text-align">' +
+            'Duration:' +
+          '</span>' +
+          '<div class="col-xs-7 col-xs-offset-0 col-sm-6 col-sm-offset-0 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-0" style="padding:0px">' +
+            '<div class="input-group valve-duration ' + disabledClass + '" id="duration-' + row + '" name>' +
+              '<input type="text" class="form-control" placeholder="HH:mm" style="white-space: pre" ' + disabledClass + '>' +
+              '<span class="input-group-addon ' + disabledClass + '">' +
+                '<span class="glyphicon glyphicon-time"></span>' +
+              '</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        // '<div class="col-xs-10 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-0 col-lg-4 col-lg-offset-0 row-text-align" style="display:flex;flex-direction:row">' +
+        //   '<span class="col-xs-10 col-xs-offset-0 col-sm-6 col-sm-offset-0 col-md-8 col-md-offset-0 col-lg-4 col-lg-offset-0 row-text-align">' +
+        //     'Dosing:' +
+        //   '</span>' +
+        //   '<select class="form-control" id="dosing-' + row + '" ' + disabledClass + '>' +
+        //     '<option value="NA">None</option>' +
+        //     '<option value="program_1">Program 1</option>' +
+        //   '</select>' +
+        // '</div>' +
+        // '<div class="col-xs-11 col-xs-offset-0 col-sm-11 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-offset-1 row-text-align col-lg-10">' +
+        //   '<div class="row">' +
+        //     '<div class="col-xs-2 col-xs-offset-3 col-sm-1 col-sm-offset-0 col-md-1 col-lg-offset-0 row-text-align"> ' +
+        //       '<span class="row-text-align" style="margin-right:0px">' +
+        //         'T1:' +
+        //       '</span>' +
+        //     '</div> ' +
+        //     '<span class="col-xs-2 col-xs-offset-0 col-sm-2 col-sm-offset-0 col-md-2">' +
+        //       '<button type="button" class="btn btn-warning iht-btn-square btn-pause" ' + disabledClass + ' is-pause="false" id="st1-' + row + '"> ' +
+        //         '<span class="glyphicon glyphicon-pause"></span> ' +
+        //       '</button>' +
+        //     '</span> ' +
+        //     '<div class="col-xs-2 col-xs-offset-1 col-sm-1 col-sm-offset-0 col-md-1 row-text-align">' +
+        //       '<span class="row-text-align">' +
+        //         'T2:' +
+        //       '</span>' +
+        //     '</div> ' +
+        //     '<span class="col-xs-2 col-xs-offset-0 col-sm-2 col-sm-offset-0 col-md-2">' +
+        //       '<button type="button" class="btn btn-warning iht-btn-square btn-pause" ' + disabledClass + ' is-pause="false" id="st2-' + row + '">' +
+        //         '<span class="glyphicon glyphicon-pause"></span> ' +
+        //       '</button>' +
+        //     '</span> ' +
+        //     '<div class="col-xs-2 col-xs-offset-3 col-sm-1 col-sm-offset-0 col-md-1 row-text-align"> ' +
+        //       '<span class="row-text-align">' +
+        //         'T3:' +
+        //       '</span>' +
+        //     '</div>' +
+        //     '<span class="col-xs-2 col-xs-offset-0 col-sm-2 col-sm-offset-0 col-md-2">' +
+        //       '<button type="button" class="btn btn-warning iht-btn-square btn-pause" ' + disabledClass + ' is-pause="false" id="st3-' + row + '"> ' +
+        //         '<span class="glyphicon glyphicon-pause"></span>' +
+        //       '</button>' +
+        //     '</span>' +
+        //     '<div class="col-xs-2 col-xs-offset-1 col-sm-1 col-sm-offset-0 col-md-1 row-text-align" >' +
+        //       '<span class="row-text-align">' +
+        //         'T4:' +
+        //       '</span>' +
+        //     '</div>' +
+        //     '<span class="col-xs-2 col-xs-offset-0 col-sm-2 col-sm-offset-0 col-md-2">' +
+        //       '<button type="button" class="btn btn-warning iht-btn-square btn-pause" ' + disabledClass + ' is-pause="false" id="st4-' + row + '"> ' +
+        //         '<span class="glyphicon glyphicon-pause"></span>' +
+        //       '</button>' +
+        //     '</span>' +
+        //   '</div>' +
+        // '</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="col-xs-8 col-xs-offset-2 col-sm-2 col-sm-offset-0 col-lg-pull-0 row-text-align col-lg-offset-0">' +
+      '<button type="button" class="btn btn-danger iht-btn-row-remover" ' + disabledClass + '>' +
+        '<i class="glyphicon glyphicon-remove"></i>' +
+      '</button>' +
+    '</div>' +
+    '<div class="col-xs-10 col-xs-offset-1 col-sm-10 col-sm-offset-1 col-md-10 col-md-offset-1 col-lg-10 col-lg-offset-1 row-text-align irrigation-row-divider">' +
+    '</div>' +
+  '</div>'

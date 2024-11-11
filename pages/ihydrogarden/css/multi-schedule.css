@@ -1,0 +1,19 @@
+.clearfix{clear:both;}
+
+.text_checkbox{float:left;margin-left:20px;}
+
+.navbar-default{
+	border-color: white !important;
+}
+
+.nav-tabs{
+	border-bottom: white !important;
+}
+
+.panel{
+	border: 1px solid #fff !important;
+	box-shadow: none;
+
+}
+
+

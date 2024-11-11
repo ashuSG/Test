@@ -1,0 +1,74 @@
+@media (max-width: 767px) {
+    .navbar-top-links li a  {
+        margin-top: 30px;
+    }
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	border: none;
+}
+
+body{
+    text-align: center;
+}
+
+
+.submit-button-div{
+    padding-bottom: 10px;
+}
+
+button {
+    color: white;
+    padding: 8px 10px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.set_default{
+    color: #84B940;
+    background-color:transparent;
+    border-color:#84B940 ;
+    border: 1px solid #84B940;
+}
+
+.select{
+    background-color: #84B940;
+}
+
+.eventDisplay {
+    border-radius: 12px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
+
+.thumb {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+@media only screen and (min-width: 768px) {
+    .title {
+        text-align: center;
+        padding: 20px;
+        font-size: 32px;
+        font-weight: 700;
+        color: #555;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .title {
+        text-align: center;
+        padding: 10px;
+        font-size: 32px;
+        font-weight: 700;
+        color: #555;
+    }
+}

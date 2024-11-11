@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <!-- jQuery -->
+    <script src="../../vendor/jquery/jquery.min.js"></script>
+
+    <!-- AWS Cognito SDK -->
+    <script src="../../dist/js/aws-cognito-sdk.min.js"></script>
+    <script src="../../dist/js/amazon-cognito-identity.min.js"></script>
+
+    <title>iHydroGarden - Status</title>
+    <!-- favicon -->
+    <link rel="shortcut icon" href="../../dist/images/favicon.ico" type="image/x-icon" />
+    <div id="header-stuff"></div>
+</head>
+
+<body>
+    <div id="wrapper">
+        <!-- Navigation -->
+        <nav id="nav-tp" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <a id="dosage" href="#">Dosing</a>
+        </nav>                
+        
+        <link rel="stylesheet" type="text/css" href="css/ihydrogarden.css">
+        <div id="page-wrapper">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">System Status
+                        <!--<button onclick="openMap()" type="button" class="btn btn-info">Map</button>-->
+                        <div id="connection" style="display:inline-block">
+
+                        </div>
+                        <!-- <button onclick="openConfig()" type="button" class="btn btn-info">Soil Moisture Sensor</button>  -->
+                    </h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+
+            <div id="clock" class="clock">loading ...</div>
+
+            <div class="panel panel-default">
+                <table class="table table-bordered">
+                    <tr>
+                        <div id="water-usage"></div>
+                        <div id="mainDash" style="width:100%;height:200px;display: inline-block;">
+                            <div id="Humidity" style="width:250px;display:none;">
+                                <div>Humidity (%)</div>
+                                <div id="humidity_value" style="font-size:20px"></div>
+                            </div>
+                            <div id="g1" style="width:250px;display:inline-block;"></div>
+                            <div id="Temperature" style="width:250px;display:none;">
+                                <div>Temperature (&#176;C)</div>
+                                <div id="temperature_value" style="font-size:20px"></div>
+                            </div>
+                        </div>
+                        <div id="meter-message"></div>
+                        <div id="sms-div" style="display: none;">
+                            <h4>Soil Moisture Sensor</h4>
+                            <div id="sms" style="display: inline-block;"></div>
+                        </div>
+                    </tr>
+                    <thead>
+                        <tr>
+                            <th>Valve Name</th>
+                            <th>Zone Status</th>
+                            <th>Manual On/Off</th>
+                        </tr>
+                    </thead>
+                    <tbody id='valveslist'>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+
+    <div class="modal fade" id="status-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 id='modal-title' class="modal-title"></h4>
+                </div>
+
+                <div id='modal-body' class="modal-body">
+
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                    <button onclick="setSettings()" type="button" class="btn btn-info" style="margin-bottom:10px">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--
+    <div class="modal fade" id="map-modal">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">Map Preview</h4>
+          </div>
+          <div class="modal-body">
+            <img src="images/6zones.jpg" id="imagepreview" style="width: 840px; height: 650px;" >
+          </div>
+          <div class="modal-footer">
+            <form enctype="multipart/form-data" action="/upload/image" method="post">
+                <input id="map-image-file" type="file" />
+                <button onclick="uploadMap()" type="button" class="btn btn-info pull-left">Upload</button>
+            </form>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    -->
+    <div class="modal fade" id="switch-on-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 id='modal-title' class="modal-title"></h4>
+                </div>
+
+                <div id='modal-body' class="modal-body">
+                    <div class="row">;
+                        <div class="form-group col-sm-6">;
+                            <label>Duration: </label>;
+                            <div class="input-group">;
+                                <input id="switch-duration" type="text" class="form-control" disabled>;
+                                <span class="input-group-addon">mins</span>;
+                            </div>
+                        </div>;
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                        <button onclick="setSettings()" type="button" class="btn btn-success">Turn On</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="configuration-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 id='modal-title' class="modal-title">Soil Moisture Sensor</h4>
+                </div>
+
+                <div id='modal-body' class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-sm-12">
+                            <p><i>These settings should only be configured if you <strong>have</strong> a soil moisture sensor installed. Please do not change these settings if you do not have a soil moisture sensor.</i></p>
+                            <label>Activated: </label>
+                            <select id="active">
+                              <option id="active-yes" value="1">Yes</option>
+                              <option id="active-no" value="0">No</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label>Group: </label>
+                            <div class="input-group">
+                                <input id="group" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>Low Moisture Irrigation Setpoint: </label>
+                            <div class="input-group">
+                                <input id="low-setpoint" type="text" class="form-control">
+                                <span class="input-group-addon">%</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-sm-6">
+                            <label>High Moisture Irrigation Setpoint: </label>
+                            <div class="input-group">
+                                <input id="high-setpoint" type="text" class="form-control">
+                                <span class="input-group-addon">%</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-sm-12">
+                            <label>Moisture Level: </label>
+                            <div class="input-group">
+                                <input id="moisture-value" type="text" class="form-control" disabled>
+                                <span class="input-group-addon">%</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="error" class="alert alert-danger">
+                        <strong>Error:</strong>
+                        <div id="error-message"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+                        <button onclick="setConfig()" type="button" class="btn btn-success">Save</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="../../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="../../vendor/metisMenu/metisMenu.min.js"></script>
+
+        <!-- lodash JS -->
+        <script src="../../dist/js/lodash.min.js"></script>
+
+        <!-- Global variables JS -->
+        <script src="js/gvars.js"></script>
+
+        <!-- Status Page JS -->
+        <script src="js/dashboard.js"></script>
+
+        <!-- Moment JS -->
+        <script src="js/moment-with-locales.js"></script>
+
+        <!-- JustGage JS -->
+        <script src="js/justgage.js"></script>
+
+        <!-- ProgressBar JS -->
+        <script src="js/progressbar.min.js"></script>
+
+        <!-- Raphael JS -->
+        <script src="js/raphael-2.1.4.min.js"></script>
+</body>
+</html>

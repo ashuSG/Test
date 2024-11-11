@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<div class="container" id="scheduleTab" >
+    <ul class="nav nav-tabs">
+        <li class="active">
+            <a href="#programTab" data-toggle="tab">Program 1</a>
+        </li>
+        <li>
+            <a href="#programTab2" data-toggle="tab">Program 2</a>
+        </li>
+    </ul>
+
+    <div class="tab-content clearfix">
+        <div class="tab-pane fade active in" id="programTab">
+
+            <div class="tab-pane-header" style="display:inline-block;width:100%;">
+                <h3 style="float:left;">Scheduling</h3>
+
+                <!-- <div class="btn-group">
+                    <button type="button" class="btn btn-secondary"> Toggle Activate </button>
+                    <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" 
+                            id="dropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="fa fa-caret-down"></span>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenu">
+                        <a class="dropdown-item" href="#">Activate</a>
+                        <a class="dropdown-item" href="#">Deactivate</a>
+                    </div>
+                </div> -->
+                <div style="width:40%;float:right;text-align:right">
+                    <div style="display:inline-block">
+                        <select class="form-control" id="isActivate">
+                            <option>Activate</option>
+                            <option>Deactivate</option>
+                        </select>
+                    </div>
+                    <button type="button" id="edit-schedule" class="btn btn-warning" style="color:rgb(0, 0, 0);height:34px;">Edit</button>
+                    <button type="button" id="undo-schedule" class="btn btn-warning" style="color:rgb(0, 0, 0);height:34px;display:none">Undo</button>
+                    <button type="button" id="saveChanges" class="btn btn-primary" style="color:rgb(0, 0, 0);height:34px;">Save Changes</button>
+                </div>
+            </div>
+            
+            <div class="row form-group" id="schedulingDay">
+                <div class="col-md-12" style="margin-bottom:10px">
+                    <label class="pull-left">Irrigation Day(s): </label>
+                    <!-- <label class="checkbox-inline">
+                        <div style="margin-left:100px">
+                            <input type="checkbox" id="isDaily">
+                            Daily
+                        </div>
+                    </label> -->
+                </div>
+                <div class="col-xs-8 col-sm-12">
+                    <label class="checkbox-inline disabled" style="margin-left:10px" >
+                        <input type="checkbox" class="day" id="day-of-week-0" value=0 disabled="true">
+                        Monday
+                    </label>
+                    <label class="checkbox-inline disabled">
+                        <input type="checkbox" class="day" id="day-of-week-1" value=1 disabled="true">
+                        Tuesday
+                    </label>
+                    <label class="checkbox-inline disabled">
+                        <input type="checkbox" class="day" id="day-of-week-2" value=2 disabled="true">
+                        Wednesday
+                    </label>
+                    <label class="checkbox-inline disabled">
+                        <input type="checkbox" class="day" id="day-of-week-3" value=3 disabled="true">
+                        Thursday
+                    </label>
+                    <label class="checkbox-inline disabled">
+                        <input type="checkbox" class="day" id="day-of-week-4" value=4 disabled="true">
+                        Friday
+                    </label>
+                    <label class="checkbox-inline disabled">
+                        <input type="checkbox" class="day" id="day-of-week-5" value=5 disabled="true">
+                        Saturday
+                    </label>
+                    <label class="checkbox-inline disabled">
+                        <input type="checkbox" class="day" id="day-of-week-6" value=6 disabled="true">
+                        Sunday
+                    </label>
+                </div>
+            </div>
+
+            <div id="schedulingStartTime" id="schedulingStartTime">
+                <label class="pull-left" style="padding-left:16px">
+                    Start Times:
+                </label>
+
+                <!-- <div class="container">
+                    <div class="row">
+                        <div class="col-xs-8 col-sm-2">
+                            <div class="form-group">
+                                <div class="input-group date disabled" id="datetimepicker1">
+                                    <input type="text" class="form-control" placeholder="HH:mm" id="start_time_1" value="" disabled="true"/>
+                                    <span class="input-group-addon disabled">
+                                        <span class="glyphicon glyphicon-time"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-8 col-sm-2">
+                            <div class="form-group">
+                                <div class="input-group date disabled" id="datetimepicker2">
+                                    <input type="text" class="form-control" placeholder="HH:mm" id="start_time_2" value="" disabled="true"/>
+                                    <span class="input-group-addon disabled">
+                                        <span class="glyphicon glyphicon-time"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-8 col-sm-2">
+                            <div class="form-group">
+                                <div class="input-group date disabled" id="datetimepicker3">
+                                    <input type="text" class="form-control" placeholder="HH:mm" id="start_time_3" value="" disabled="true"/>
+                                    <span class="input-group-addon disabled">
+                                        <span class="glyphicon glyphicon-time"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-8 col-sm-2">
+                            <div class="form-group">
+                                <div class="input-group date disabled" id="datetimepicker4">
+                                    <input type="text" class="form-control" placeholder="HH:mm" id="start_time_4" value="" disabled="true"/>
+                                    <span class="input-group-addon disabled">
+                                        <span class="glyphicon glyphicon-time"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div> -->
+            </div>
+            <div id="schedulingDuration">
+                <div style="text-align:left;padding:6px 16px">
+                    <label>Durations:</label>
+                </div>
+            </div>
+            
+            
+        </div>  <!-- End of #programTab -->
+        <div class="tab-pane fade" id="programTab2">
+            <h3>Tab2</h3>
+        </div>
+    </div>
+    <script src="js/gvars.js" defer></script>
+    <script src="js/schedule-maxie.js"></script>
+    <script type="text/javascript">
+      $(function () {
+        $(".date").datetimepicker({
+            format: "HH:mm"
+        });
+
+        $(".date-duration").datetimepicker({
+            format: "HH:mm",
+            defaultDate: new Date(1989, 12, 16, 0, 0),
+            useCurrent: false
+        });
+        // $(".date-duration > input:text").val("");
+      });
+  </script>
+</div>

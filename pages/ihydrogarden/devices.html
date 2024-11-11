@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- jquery -->
+
+    <script src="../../vendor/jquery/jquery.min.js"></script>
+    <script src="../../js/auth.js"></script>
+
+    <!-- AWS Cognito SDK -->
+    <script src="../../dist/js/aws-cognito-sdk.min.js"></script>
+    <script src="../../dist/js/amazon-cognito-identity.min.js"></script>
+    
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../dist/images/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="../../vendor/bootstrap/css/bootstrap.min.css">
+    
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../ihydrogarden/css/sb-admin-2.css">
+    <!-- <link rel="stylesheet" href="../ihydrogarden/css/devices.css"> -->
+    <link rel="stylesheet" href="../ihydrogarden/css/locations-devices.css">
+    <link rel="stylesheet" href="./css/global.css">
+    
+    <!-- Custom Fonts -->
+    <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
+    <title>iHydroTown - Controller &amp; Sensors</title>
+    
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgjEaUbVXobKlI2FKXc9Y8hf_Qf4EXkjg&libraries=places" type="text/javascript"></script> -->
+
+</head>
+
+<body>
+
+        
+    <section class="container">
+        <div class="row nav navbar-top-links navbar">
+            <h1 class="title col-xs-3 col-sm-4"></h1>
+            <h1 class="title col-xs-4 col-sm-4">Controllers &amp; Sensors</h1>
+            <ul class="nav navbar-top-links col-xs-2 col-sm-4 navbar-right"></ul>
+                <li data-toggle="tooltip" data-placement="bottom" title="Logout">
+                    <a onclick="signOut()" href="../../index.html"><i class="navbar-icons fa fa-sign-out fa-fw"></i></a>
+                </li>
+            </ul>
+        </div>
+        <h3>Controllers</h3>
+        <div class="locations row" id="devices"></div>
+        
+        <h3>Sensors</h3>
+        <div class="locations row" id="sensors">
+            <!-- <div class="col-sm-4" style="background-color:white;">
+                <div class="eventDisplay">
+                    <div class="thumb">
+                        <br>
+                        
+                        <div class="card shadow mb-4">
+                            <div class="card-header py-3">
+                                <h6 class="m-0 font-weight-bold text-primary">22080100454</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-area">
+                                    <canvas id="myAreaChart"></canvas>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+                        <h3 title="location">L1-01</h3>
+    
+                        <br><br>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        
+        <button type="button" class="set_default" id="loadMoreSensorsButton" onclick="onClickLoadMoreSensor()">Load More</button>
+    </section>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../../vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../ihydrogarden/js/charts/chart.min.js"></script>
+
+    <script src="../ihydrogarden/js/gvars.js"defer></script>
+    <script src="../ihydrogarden/js/projects-devices/devices.js" defer></script>
+    <script src="../ihydrogarden/js/projects-devices/util.js" defer></script>
+</body>
+</html>

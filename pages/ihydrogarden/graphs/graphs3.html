@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <!-- jQuery -->
+        <script src="../../vendor/jquery/jquery.min.js"></script>
+        <script src="../../dist/js/chartist.min.js"></script>
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="css/ihydrogarden.css">
+        <link rel="stylesheet" type="text/css" href="css/netafarm-graph.css">
+        <link rel="stylesheet" href="../../dist/css/chartist.min.css">
+
+
+
+        <!-- AWS Cognito SDK -->
+        <script src="../../dist/js/aws-cognito-sdk.min.js"></script>
+        <script src="../../dist/js/amazon-cognito-identity.min.js"></script>
+
+        <title>iHydroGarden - Chart</title>
+        <!-- favicon -->
+        <link rel="shortcut icon" href="../../dist/images/favicon.ico" type="image/x-icon" />
+
+        <script>
+            $('head').append($('<div>').load("header-tp.html"));
+        </script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    </head>
+
+    <body>
+        <div id="wrapper">
+            <nav id="nav-tp" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <a id="dosage" href="#">Chart</a>
+            </nav>
+
+            <script>
+                $("#nav-tp").load("nav-tp.html");
+            </script>
+
+            <div id="page-wrapper">
+                <div class="page-head col-lg-12">
+                    <h1 class="page-header">Chart 1</h1>
+                </div>
+
+
+                <!-- <div id="chart_div"></div> -->
+
+
+                <!--<div id="table_div_1" style="margin-top: 10px"></div> -->
+
+                <div id="cover">
+                    <div id="pages">
+                        <div id="chart_div_1" class="show-element" style="width: 1359; height: 350"></div>
+                        <div id="table_div_1" class="show-element" style="margin-top: 10px"></div>
+
+                        <!--                        <div id="table_div_2" class="hide-element" style="margin-top: 10px"></div>-->
+
+                        <!--                        <div id="table_div_3" class="hide-element" style="margin-top: 10px"></div>-->
+
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" id="btnn" type="button" data-toggle="dropdown">Choose Other Charts
+                            <span class="caret"></span></button>
+                        <ul class="dropdown-menu" id="dropdownn">
+                            <li><a href="#" tableId="1" class="mybutton myred">Chart 1</a></li>
+                            <li><a href="#" tableId="2" class="mybutton myred">Chart 2</a></li>
+                            <li><a href="#" tableId="3" class="mybutton myred">Chart 3</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="../../vendor/bootstrap/js/bootstrap.min.js"></script>
+
+        <!-- Metis Menu Plugin JavaScript -->
+        <script src="../../vendor/metisMenu/metisMenu.min.js"></script>
+
+        <!-- Global variables JS -->
+        <script src="js/gvars.js"></script>
+
+        <!-- Status Page JS -->
+        <!--        <script src="js/status.js"></script>-->
+
+        <!-- Moment JS -->
+        <script src="js/moment-with-locales.js"></script>
+
+        <!-- JustGage JS -->
+        <script src="js/justgage.js"></script>
+
+        <!-- ProgressBar JS -->
+        <script src="js/progressbar.min.js"></script>
+
+        <!-- Raphael JS -->
+        <script src="js/raphael-2.1.4.min.js"></script>
+
+        <script src="js/chart2.js"></script>
+
+        <script src="js/charts.js"></script>
+
+        <script src="js/chart3.js"></script>
+
+        <!--        <script src="js/graphs2.js"></script>-->
+
+        <!--        <script src="js/graphs3.js"></script>-->
+    </body>
+</html>

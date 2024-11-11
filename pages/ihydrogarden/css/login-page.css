@@ -1,0 +1,105 @@
+body{
+    background-image: linear-gradient(135deg,#65AB3D,#71BF44,#C7BD3A,#F0AE37,#78B6CC,#28B6E7) !important;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+form{
+    font-family: "Amazon Ember" !important;
+}
+
+
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.btn-success{
+
+    
+    border-radius: 20px;
+    border: none;
+    
+}
+
+.btn-success.color1{
+    background-image: linear-gradient(to right,#65AB3D,#71BF44,#78B6CC,#28B6E7) !important;
+}
+
+.panel-default .panel-heading {
+
+    background-color: white !important;
+    border-bottom: white !important;
+}
+
+.panel-default{
+    border-color: white !important;
+   
+}
+
+.panel-title{
+    font-size: 30px;
+    font-weight: 550;
+}
+
+.container2{
+    margin-top: 10px;
+}
+
+#image{
+    margin-top: 60px;
+}
+
+.login-panel{
+    width: 600px;
+}
+
+.form-control{
+    text-align: center;
+}
+
+@media (max-width: 1510px){
+    #immage{
+        width: 100px;
+        margin-bottom: -20px;
+    }
+}
+
+@media (max-width:991px){
+	#immage{
+        width: 70px;
+		margin-bottom: -40px;
+	}
+    .login-panel{
+        width: 500px
+    }
+}
+
+@media (max-width: 600px){
+	#immage{
+        width: 80px;
+		margin-bottom: -20px;
+}
+    .login-panel{
+        width: 400px;
+    }
+}
+
+@media (max-width: 414px){
+    .login-panel{
+        width: 350px;
+    }
+}
+
+@media (max-width: 390px){
+    .login-panel{
+        width: 300px;
+    }
+}
+
+@media (max-width: 280px){
+    .login-panel{
+        width: 240px;
+    }
+}

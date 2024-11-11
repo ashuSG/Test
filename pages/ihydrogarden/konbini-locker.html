@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- jQuery -->
+    <script type="text/javascript" src="../../vendor/jquery/jquery.min.js"></script>
+
+    <!-- datetime related -->
+    <script type="text/javascript" src="./js/moment-with-locales.js"></script>
+    <script type="text/javascript" src="./js/bootstrap-datetimepicker.min.js"></script>
+    <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+
+
+    <!-- Bootstrap Core JavaScript -->
+	<script type="text/javascript" src="../../vendor/bootstrap/js/bootstrap.min.js"></script>
+	
+	<!-- AWS Cognito SDK -->
+    <script src="../../dist/js/aws-cognito-sdk.min.js"></script>
+    <script src="../../dist/js/amazon-cognito-identity.min.js"></script>
+
+    <title>iHydroGarden - Data Analytics</title>
+
+    <!-- favicon -->
+    <link rel="shortcut icon" href="../../dist/images/favicon.ico" type="image/x-icon" />
+
+    <!-- Graph css -->
+    <link href="../../vendor/dygraph/css/dygraph.css" rel="stylesheet">
+
+    <!-- Custom css -->
+    <link href="./css/ihydrogarden-loader.css" rel="stylesheet">
+    <link href="./css/netafarm.css" rel="stylesheet">
+    <link href="./css/crop-sensors.css" rel="stylesheet">
+    
+    <!-- Metis Menu Plugin JavaScript -->
+    <script type="text/javascript" src="../../vendor/metisMenu/metisMenu.min.js"></script>
+	<div id="testr"></div>
+</head>
+
+<body>
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav id="nav-tp" class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        </nav>
+        <script>
+            $("#nav-tp").load("nav-tp.html");
+		</script>
+
+	<div id="loader-wrapper">
+		<!-- <h1>" "</h1> -->
+		<div id="loader"></div>
+		<!-- <div class="loader-section section-left"></div>
+		<div class="loader-section section-right"></div> -->
+	</div>
+	<!-- /#loader-wrapper --> 
+		
+		<div id="content">
+			<div id="page-wrapper">
+                <h1 class="page-header">Locker Box Demo</h1>
+                <div class="panel panel-default" id="data-chart-div">
+                    <div class="panel-body">
+                        <div class="page-head col-lg-12">
+                            
+                            <div class="row col-lg-12">
+                                <button class="btn btn-primary col col-lg-6" id="open-1-btn" type="button">Locker 1</button>
+                                <button class="btn btn-primary col col-lg-6" id="open-5-btn" type="button">Locker 5</button>                
+                                
+                            </div>
+
+                            <div class="row col-lg-12">
+                                <button class="btn btn-primary col col-lg-6" id="open-2-btn" type="button">Locker 2</button>
+                                <button class="btn btn-primary col col-lg-6" id="open-6-btn" type="button">Locker 6</button>
+                                
+                            </div>
+                            <div class="row col-lg-12">
+                                <button class="btn btn-primary col col-lg-6" id="open-3-btn" type="button">Locker 3</button>                
+                                <button class="btn btn-primary col col-lg-6" id="open-7-btn" type="button">Locker 7</button>
+                            </div>
+                            <div class="row col-lg-12">
+                                <button class="btn btn-primary col col-lg-6" id="open-4-btn" type="button">Locker 4</button>
+                                <button class="btn btn-primary col col-lg-6" id="open-8-btn" type="button">Locker 8</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                
+            </div>
+
+			<!-- /#page-wrapper -->
+		</div>
+		<!-- /#content -->   
+    </div>
+    <!-- /#wrapper -->
+
+
+
+	<script type="text/javascript" defer>
+		$('head').append($('#testr').load("header-tp.html"));
+		$("input[type='text']").on("change", function() {
+        console.log("text changed!!")
+		});
+	</script>
+
+    <!-- Chart Page JS -->
+    <script src="js/gvars.js" defer></script>
+    <!-- <script src="js/multi-schedule.js" defer></script> -->
+    <script src="js/konbini.js" defer></script>
+    
+
+	<!-- lodash JS -->
+	<script src="../../dist/js/lodash.min.js"></script>
+</body>
+</html>
