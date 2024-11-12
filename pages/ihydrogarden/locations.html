@@ -2,73 +2,77 @@
 <html lang="en">
 
 <head>
+    <!-- jquery -->
+    <script src="../../vendor/jquery/jquery.min.js"></script>
+    <script src="../../js/auth.js"></script>
+
+    <!-- AWS Cognito SDK -->
+    <script src="../../dist/js/aws-cognito-sdk.min.js"></script>
+    <script src="../../dist/js/amazon-cognito-identity.min.js"></script>
+    
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>iHydroTown - Farm & Water Assets</title>
-
-    <!-- Favicon -->
+    <meta name="description" content="">
+    <meta name="author" content="">
     <link rel="shortcut icon" href="../../dist/images/favicon.ico" type="image/x-icon" />
-
-    <!-- Bootstrap and Custom CSS -->
-    <link rel="stylesheet" href="../../vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../../vendor/bootstrap/css/bootstrap.min.css">
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="../ihydrogarden/css/sb-admin-2.css">
     <link rel="stylesheet" href="../ihydrogarden/css/locations-devices.css">
     <link rel="stylesheet" href="./css/global.css">
+
+
+    
+    <!-- Custom Fonts -->
     <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    
+    <title>iHydroTown - Farm &amp; Water Assets</title>
+    
+    <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAgjEaUbVXobKlI2FKXc9Y8hf_Qf4EXkjg&libraries=places" type="text/javascript"></script> -->
 
-    <!-- Essential Scripts - Loaded in order to avoid breaking functionality -->
-    <script src="../../vendor/jquery/jquery.min.js"></script>
-    <script src="../../js/auth.js"></script>
-    <script src="../../dist/js/aws-cognito-sdk.min.js"></script>
-    <script src="../../dist/js/amazon-cognito-identity.min.js"></script>
-
-    <style>
-        /* CSS for the loading spinner */
-        #loader {
-            display: none;
-            text-align: center;
-            margin: 20px;
-        }
-        .spinner-border {
-            width: 3rem;
-            height: 3rem;
-        }
-    </style>
 </head>
 
 <body>
+    <!-- <div class="panel panel-main"> -->
+    <!-- <h2 class="title">Farm &amp; Water Assets</h2> -->
+    
+    
+    <!-- <div id="googleMap" style="width:100%;height:750px;"></div> -->
+    
     <section class="container">
         <div class="row nav navbar-top-links navbar">
             <h1 class="title col-xs-3 col-sm-4"></h1>
             <h1 class="title col-xs-4 col-sm-4">Farm &amp; Water Assets</h1>
-            <ul class="nav navbar-top-links col-xs-2 col-sm-4 navbar-right">
+            <ul class="nav navbar-top-links col-xs-2 col-sm-4 navbar-right"></ul>
                 <li data-toggle="tooltip" data-placement="bottom" title="Logout">
                     <a onclick="signOut()" href="../../index.html"><i class="navbar-icons fa fa-sign-out fa-fw"></i></a>
                 </li>
             </ul>
         </div>
 
-        <!-- Loader Section -->
-        <div id="loader">
-            <div class="spinner-border text-primary" role="status">
-                <span class="sr-only">Loading...</span>
-            </div>
-            <p>Loading projects, please wait...</p>
-        </div>
-
-        <!-- Project container where dynamically loaded content will be inserted -->
+        <!-- <ul class="nav navbar-top-links navbar-right">
+            <li data-toggle="tooltip" data-placement="bottom" title="Dashboard">
+                <a href="dashboard.html"><i class="navbar-icons fa fa-dashboard fa-fw"></i></a>
+            </li>
+            <li id="schedule-page" data-toggle="tooltip" data-placement="bottom" title="Multi-schedule">
+                <a href="multi-schedule.html"><i class="navbar-icons fa fa-table fa-fw"></i></a>
+            </li>
+        </ul>     -->
+        
         <div class="locations row" id="locations">
-            <!-- Content will be dynamically loaded here -->
+
         </div>
     </section>
-
     <!-- Bootstrap Core JavaScript -->
-    <script src="../../vendor/bootstrap/js/bootstrap.min.js" defer></script>
+    <script type="text/javascript" src="../../vendor/bootstrap/js/bootstrap.min.js"></script>
 
-    <!-- Additional Page Scripts - Loaded with defer to improve page load time -->
-    <script src="../ihydrogarden/js/projects-devices/locations.js" defer></script>
-    <script src="../ihydrogarden/js/projects-devices/util.js" defer></script>
-    <script src="../ihydrogarden/js/gvars.js" defer></script>
+    <!-- auth JS -->
+    <script src="../../js/auth.js"></script>
+
+    <script type="text/javascript" src="../ihydrogarden/js/projects-devices/locations.js"></script>
+    <script type="text/javascript" src="../ihydrogarden/js/projects-devices/util.js"></script>
+    <script type="text/javascript" src="../ihydrogarden/js/gvars.js"></script>
 </body>
 </html>
